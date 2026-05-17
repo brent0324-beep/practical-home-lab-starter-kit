@@ -3,11 +3,19 @@
 Build a secure, repeatable Linux-based network engineering lab with GNS3,
 Ansible, remote access, and practical documentation habits.
 
-This repo is a free starter kit for network engineers who want a home lab that
-feels closer to production work than a pile of disconnected VMs. It focuses on
-small, defensible choices: a hardened Linux host, documented topology, GNS3 for
-network simulation, Ansible for repeatable checks, and remote access that does
-not depend on risky shortcuts.
+This is a free public starter kit for network engineers who want a Linux-based
+home lab that is easier to rebuild, document, secure, and automate. It solves a
+common lab problem: tools like GNS3, SSH, UFW, Ansible, inventories, diagrams,
+and notes often grow separately until the lab is hard to trust or explain.
+
+With this repo today, you can plan a small lab topology, prepare a hardened
+Linux host, connect GNS3 virtual routers and switches, run read-only Ansible
+checks, use sanitized templates, and follow release checks before publishing
+your own notes.
+
+The focus is practical and modest: a hardened Linux host, documented topology,
+GNS3 for network simulation, Ansible for repeatable checks, and remote access
+that does not depend on risky shortcuts.
 
 The examples are intentionally sanitized. Copy the structure, not the literal
 values. Replace lab addresses, hostnames, usernames, SSH keys, and inventories
@@ -34,6 +42,8 @@ Then use:
 - [diagrams/](diagrams/) for Mermaid architecture diagrams.
 - [docs/release-checklist.md](docs/release-checklist.md) before publishing
   changes or release notes.
+- [docs/publication-checklist.md](docs/publication-checklist.md) before sharing
+  the repo publicly.
 
 ## Who This Is For
 
