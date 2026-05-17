@@ -21,6 +21,12 @@ The examples are intentionally sanitized. Copy the structure, not the literal
 values. Replace lab addresses, hostnames, usernames, SSH keys, and inventories
 with your own private lab details.
 
+## Current Status
+
+v0.1 local release candidate. The repo has public-readiness docs, sanitized
+examples, Mermaid diagrams, validation checks, and a local packaging workflow.
+It has not been pushed as part of this preparation pass.
+
 ## Repo Navigation
 
 Start here:
