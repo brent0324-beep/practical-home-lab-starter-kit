@@ -3,6 +3,10 @@ set -euo pipefail
 
 required_files=(
   "README.md"
+  "CHANGELOG.md"
+  "LICENSE.md"
+  "CONTRIBUTING.md"
+  "SECURITY.md"
   "docs/architecture.md"
   "docs/linux-host-setup.md"
   "docs/gns3-setup.md"
@@ -11,6 +15,8 @@ required_files=(
   "docs/ansible-workflows.md"
   "docs/troubleshooting.md"
   "docs/product-roadmap.md"
+  "docs/example-lab-topology.md"
+  "docs/release-checklist.md"
   "templates/ufw-rules.example.sh"
   "templates/ssh-hardening-checklist.md"
   "templates/lab-inventory.example.ini"
@@ -24,6 +30,8 @@ required_files=(
   "product/paid-bundle-outline.md"
   "product/launch-checklist.md"
   "product/content-funnel.md"
+  "product/free-vs-paid-scope.md"
+  "product/v0.1-launch-plan.md"
 )
 
 fail=0
@@ -46,9 +54,18 @@ required_terms=(
   "README.md:secure"
   "README.md:GNS3"
   "README.md:Ansible"
+  "README.md:What This Is Not"
+  "CHANGELOG.md:v0.1.0"
+  "CONTRIBUTING.md:sanitized examples"
+  "SECURITY.md:Sensitive Information Rules"
+  "LICENSE.md:No final open source license"
   "docs/security-hardening.md:SSH"
   "docs/remote-access.md:UFW"
   "docs/ansible-workflows.md:inventory"
+  "docs/example-lab-topology.md:Management network"
+  "docs/release-checklist.md:redaction-check.sh"
+  "product/free-vs-paid-scope.md:Stays Free"
+  "product/v0.1-launch-plan.md:v0.1"
   "templates/ufw-rules.example.sh:ufw"
   "ansible/playbooks/ping-lab.yml:ansible.builtin.wait_for"
   "ansible/playbooks/show-version.yml:show version"

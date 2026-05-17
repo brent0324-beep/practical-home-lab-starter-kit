@@ -13,12 +13,42 @@ The examples are intentionally sanitized. Copy the structure, not the literal
 values. Replace lab addresses, hostnames, usernames, SSH keys, and inventories
 with your own private lab details.
 
+## Repo Navigation
+
+Start here:
+
+- [docs/example-lab-topology.md](docs/example-lab-topology.md) shows the sample
+  lab shape.
+- [docs/linux-host-setup.md](docs/linux-host-setup.md) prepares the Linux base.
+- [docs/gns3-setup.md](docs/gns3-setup.md) connects the network simulation
+  layer.
+- [docs/security-hardening.md](docs/security-hardening.md) covers SSH, UFW, and
+  secret-handling basics.
+- [docs/ansible-workflows.md](docs/ansible-workflows.md) explains the read-only
+  automation flow.
+
+Then use:
+
+- [templates/](templates/) for sanitized copyable examples.
+- [ansible/](ansible/) for basic Ansible inventory and playbooks.
+- [docs/release-checklist.md](docs/release-checklist.md) before publishing
+  changes or release notes.
+
 ## Who This Is For
 
 - Network engineers building automation skills without waiting for a work lab.
 - Students who want a realistic Linux, GNS3, and Ansible workflow.
 - Engineers refreshing fundamentals around SSH, UFW, inventory, and runbooks.
 - Anyone who wants a lab that can be rebuilt and documented cleanly.
+
+## What This Is Not
+
+- It is not a production network design.
+- It is not a replacement for vendor documentation.
+- It is not a collection of real device credentials or private inventories.
+- It is not a promise of employment, certification, income, or operational
+  readiness.
+- It is not meant to expose lab services directly to the internet.
 
 ## What You Will Build
 
@@ -65,6 +95,8 @@ rollback thinking.
 
 ## Quick Start
 
+This is the suggested first pass:
+
 1. Install a current Ubuntu Server or Debian host for the lab.
 2. Create a normal admin user and enable SSH key-based access.
 3. Apply a default-deny UFW policy with explicit SSH and lab-management rules.
@@ -74,11 +106,21 @@ rollback thinking.
 7. Replace placeholder hostnames and private lab IPs with your own lab values.
 8. Run the sample ping and show-version playbooks against test devices.
 
-Example validation commands:
+Example Ansible workflow:
+
+```bash
+ansible-inventory -i ansible/inventory.example.ini --list
+ansible-playbook -i ansible/inventory.example.ini ansible/playbooks/ping-lab.yml
+ansible-playbook -i ansible/inventory.example.ini ansible/playbooks/show-version.yml
+```
+
+Validation commands:
 
 ```bash
 ./scripts/validate.sh
 ./scripts/redaction-check.sh
+bash -n scripts/validate.sh scripts/redaction-check.sh
+git diff --check
 ```
 
 ## Suggested Lab Standards
@@ -105,6 +147,9 @@ This free repo is designed to stand on its own. A future paid PDF/template
 bundle may add a more polished workbook, expanded topology diagrams, lab
 worksheets, checklists, and deeper troubleshooting examples. The free material
 will remain useful as a public starting point.
+
+See [product/free-vs-paid-scope.md](product/free-vs-paid-scope.md) for the
+current boundary between public content and possible future bundle material.
 
 ## Security Notice
 
