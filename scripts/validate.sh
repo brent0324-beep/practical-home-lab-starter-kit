@@ -3,6 +3,7 @@ set -euo pipefail
 
 required_files=(
   "README.md"
+  "RELEASE_NOTES.md"
   ".github/pull_request_template.md"
   ".github/ISSUE_TEMPLATE/config.yml"
   ".github/ISSUE_TEMPLATE/documentation-improvement.md"
@@ -25,6 +26,7 @@ required_files=(
   "docs/publication-checklist.md"
   "docs/sanitized-example-policy.md"
   "docs/repo-boundary-policy.md"
+  "docs/local-release-process.md"
   "diagrams/README.md"
   "diagrams/lab-topology.mmd"
   "diagrams/remote-access-flow.mmd"
@@ -46,6 +48,9 @@ required_files=(
   "product/v0.1-launch-plan.md"
   "product/pdf-bundle-table-of-contents.md"
   "product/github-launch-readme-review.md"
+  "product/v0.1-release-summary.md"
+  "product/next-phase-roadmap.md"
+  "scripts/package-release.sh"
 )
 
 fail=0
@@ -71,11 +76,13 @@ required_terms=(
   "README.md:What This Is Not"
   "README.md:Visual Architecture"
   "README.md:With this repo today"
+  "RELEASE_NOTES.md:v0.1.0"
   ".github/pull_request_template.md:Safety Review"
   ".github/ISSUE_TEMPLATE/config.yml:blank_issues_enabled"
   ".github/ISSUE_TEMPLATE/documentation-improvement.md:Documentation improvement"
   ".github/ISSUE_TEMPLATE/security-sanitization-review.md:Security or sanitization review"
   "CHANGELOG.md:v0.1.0"
+  "CHANGELOG.md:dist/"
   "CONTRIBUTING.md:sanitized examples"
   "CONTRIBUTING.md:Branch Naming"
   "CONTRIBUTING.md:No-Secrets Policy"
@@ -92,6 +99,7 @@ required_terms=(
   "docs/publication-checklist.md:Publication Checklist"
   "docs/sanitized-example-policy.md:Sanitized Example Policy"
   "docs/repo-boundary-policy.md:Repository Boundary Policy"
+  "docs/local-release-process.md:Local Release Process"
   "diagrams/README.md:Diagram Strategy"
   "diagrams/lab-topology.mmd:flowchart"
   "diagrams/remote-access-flow.mmd:flowchart"
@@ -100,6 +108,9 @@ required_terms=(
   "product/v0.1-launch-plan.md:v0.1"
   "product/pdf-bundle-table-of-contents.md:Paid PDF Bundle"
   "product/github-launch-readme-review.md:GitHub Launch README Review"
+  "product/v0.1-release-summary.md:v0.1 Release Summary"
+  "product/next-phase-roadmap.md:Next Phase Roadmap"
+  "scripts/package-release.sh:tar"
   "video/walkthrough-outline.md:Scene 1"
   "video/ai-voiceover-script-draft.md:Target length: 5 to 7 minutes"
   "templates/ufw-rules.example.sh:ufw"
@@ -115,6 +126,11 @@ for check in "${required_terms[@]}"; do
     fail=1
   fi
 done
+
+if ! bash -n scripts/package-release.sh; then
+  echo "Package script syntax check failed."
+  fail=1
+fi
 
 if [[ "$fail" -ne 0 ]]; then
   echo "Validation failed."
