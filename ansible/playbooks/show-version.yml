@@ -1,0 +1,14 @@
+---
+- name: Collect basic version output from lab devices
+  hosts: lab_network
+  gather_facts: false
+
+  tasks:
+    - name: Run show version
+      ansible.netcommon.cli_command:
+        command: show version
+      register: show_version_result
+
+    - name: Print sanitized command output to console
+      ansible.builtin.debug:
+        var: show_version_result.stdout_lines

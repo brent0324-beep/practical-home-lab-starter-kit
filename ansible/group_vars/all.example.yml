@@ -1,0 +1,16 @@
+---
+# Sanitized Ansible defaults for lab network devices.
+# Copy to all.yml locally before adding environment-specific values.
+
+ansible_command_timeout: 30
+ansible_connect_timeout: 20
+ansible_become: false
+
+lab_metadata:
+  owner: labadmin
+  site: home_lab_example
+  management_subnet: 10.10.10.0/24
+
+collection_notes:
+  save_command_output: false
+  output_directory: ./artifacts

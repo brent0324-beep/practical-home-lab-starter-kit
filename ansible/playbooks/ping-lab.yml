@@ -1,0 +1,12 @@
+---
+- name: Verify lab network device reachability
+  hosts: lab_network
+  gather_facts: false
+
+  tasks:
+    - name: Confirm SSH port is reachable from the Ansible control node
+      ansible.builtin.wait_for:
+        host: "{{ ansible_host | default(inventory_hostname) }}"
+        port: 22
+        timeout: 10
+      delegate_to: localhost

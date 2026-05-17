@@ -1,0 +1,32 @@
+---
+# Sanitized example values. Copy this file to a private local file before use.
+
+lab_site_name: home_lab_example
+lab_management_subnet: 10.10.10.0/24
+lab_dns_servers:
+  - 10.10.10.1
+  - 10.10.10.2
+
+network_defaults:
+  domain_name: lab.example
+  timezone: UTC
+  ntp_servers:
+    - 10.10.10.1
+
+device_roles:
+  routers:
+    description: Virtual routers in GNS3
+    expected_platform: ios
+  switches:
+    description: Virtual switches in GNS3
+    expected_platform: ios
+
+backup_policy:
+  enabled: true
+  local_path: ./backups
+  retain_days: 30
+
+notes:
+  - Replace all addresses with private lab values.
+  - Store real secrets outside this file.
+  - Keep production, employer, and customer details out of lab examples.
