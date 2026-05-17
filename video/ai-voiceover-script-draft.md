@@ -4,15 +4,19 @@ Target length: 5 to 7 minutes.
 
 ## Scene 1: Opening
 
-This practical home lab starter kit is for network engineers who want a secure,
-repeatable place to practice Linux, GNS3, Ansible, and remote access workflows.
+This is the Practical Home Lab Starter Kit for Network Engineers.
 
-The point is not to build a massive virtual data center on day one. The point is
+It is a free starter repo for building a secure, repeatable Linux-based lab with
+GNS3, Ansible, SSH hardening, UFW, diagrams, and documentation habits.
+
+The goal is not to build a massive virtual data center on day one. The goal is
 to build a small lab that you can explain, rebuild, secure, and improve.
 
-Everything in this repo uses sanitized examples. The hostnames, addresses, and
-paths are placeholders. Keep real credentials, private keys, tokens, account
-details, and private environment data out of public commits.
+Everything in the repo uses sanitized examples. Hostnames, addresses, usernames,
+and paths are placeholders. Real credentials, private keys, tokens, account
+details, and private environment data do not belong in public commits.
+
+Let's walk through the structure.
 
 ## Scene 2: Full Lab Topology
 
@@ -22,8 +26,8 @@ At the top is the remote admin workstation. That is the laptop or desktop you
 use to administer the lab.
 
 Next is the home router or firewall. This represents the edge of the home
-network. The lab should not depend on broad exposed access. If remote access is
-needed, use a trusted local network path or a private VPN-style access path.
+network. The lab should not depend on broad exposed access. If you need remote
+access, keep it private, intentional, and documented.
 
 The center of the design is the Linux lab host. This host runs SSH, UFW, lab
 notes, GNS3, and optionally the Ansible control workflow. Treat this host like
@@ -36,9 +40,11 @@ switches used for practice. In the starter topology, the sample nodes are
 The devices attach to a management network. The example uses private lab address
 space, such as `10.10.10.0/24`. Replace that with your own private lab plan.
 
+That gives us the big picture. Next, we narrow in on access.
+
 ## Scene 3: Remote Access Flow
 
-Now zoom in on remote access.
+Remote access is where many labs become riskier than they need to be.
 
 The safest default is local-only access. If you need access while away from the
 lab, keep it private and intentional. The diagram shows the admin workstation
@@ -50,6 +56,8 @@ passwords, and direct root login should be disabled.
 
 This gives you a simple rule: remote access should be boring, narrow, and easy
 to audit.
+
+Once access is controlled, the Linux host becomes the lab's foundation.
 
 ## Scene 4: Linux Host and GNS3
 
@@ -66,6 +74,8 @@ the inventory match the topology?
 
 Most lab problems are mismatches between diagrams, inventory, firewall rules,
 and actual device state.
+
+After the topology works manually, Ansible gives us a repeatable check.
 
 ## Scene 5: Ansible Control Flow
 
@@ -84,26 +94,29 @@ topology, management network, inventory, and Ansible connection path all line up
 Only after that should you add backups, compliance checks, or configuration
 changes.
 
+Now we move from operating the lab to sharing the lab safely.
+
 ## Scene 6: Templates and Guardrails
 
 The repo includes templates for UFW rules, SSH hardening, lab inventory, and
 network device variables. These are examples to copy and adapt, not files where
 you should store real secrets.
 
-Before publishing any change, run the validation script and the redaction check.
-The validation script confirms required files exist and contain expected starter
-content. The redaction check looks for high-signal secret patterns.
+Before publishing any change, run the validation script, the redaction check,
+the shell syntax check, and the Git whitespace check.
 
-These checks do not replace human review. They are guardrails that make mistakes
-less likely.
+The validation script confirms required files exist and contain expected starter
+content. The redaction check looks for high-signal secret patterns. These checks
+do not replace human review. They are guardrails that make mistakes less likely.
 
 ## Closing
 
 The free repo gives you the foundation: documentation, examples, templates, and
 diagram-ready architecture.
 
-A future paid bundle may add a polished workbook, rendered diagrams, worksheets,
-and deeper scenarios. But the public repo should remain useful on its own.
+Future versions may add more lab scenarios, automation workflows, rendered
+diagrams, troubleshooting guides, and a more polished PDF or template bundle.
+But the public repo should remain useful on its own.
 
 Build the small version first. Document what you built. Validate it. Then expand
 the lab one reliable step at a time.
