@@ -1,0 +1,27 @@
+flowchart TD
+    inventory["Sanitized Ansible inventory<br/>lab hostnames + private lab addresses"]
+    groupvars["Group vars<br/>connection defaults"]
+    playbooks["Read-only playbooks<br/>reachability + show commands"]
+    control["Ansible control node<br/>on Linux lab host or admin workstation"]
+    mgmt["Management network<br/>10.10.10.0/24 example"]
+    router1["lab-r1"]
+    router2["lab-r2"]
+    switch1["lab-sw1"]
+    notes["Lab notes<br/>results, issues, next steps"]
+
+    inventory --> control
+    groupvars --> control
+    playbooks --> control
+    control -->|"SSH / network_cli"| mgmt
+    mgmt --> router1
+    mgmt --> router2
+    mgmt --> switch1
+    control -->|"record findings"| notes
+
+    classDef source fill:#f7f7f7,stroke:#555,stroke-width:1px,color:#111
+    classDef controlClass fill:#ecf8ed,stroke:#2d6a35,stroke-width:1px,color:#111
+    classDef network fill:#e8f4ff,stroke:#1d4f7a,stroke-width:1px,color:#111
+
+    class inventory,groupvars,playbooks,notes source
+    class control controlClass
+    class mgmt,router1,router2,switch1 network

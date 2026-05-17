@@ -1,0 +1,28 @@
+flowchart TD
+    admin["Remote admin workstation"]
+    edge["Home router / firewall"]
+    host["Linux lab host<br/>SSH, UFW, docs, Ansible"]
+    gns3["GNS3 server"]
+    mgmt["Management network<br/>10.10.10.0/24 example"]
+    r1["GNS3 virtual router<br/>lab-r1"]
+    r2["GNS3 virtual router<br/>lab-r2"]
+    sw1["GNS3 virtual switch<br/>lab-sw1"]
+    ansible["Ansible control workflow<br/>inventory + read-only playbooks"]
+
+    admin -->|"SSH over VPN or trusted LAN"| edge
+    edge -->|"restricted access path"| host
+    host -->|"runs"| gns3
+    host -->|"executes"| ansible
+    gns3 -->|"attaches virtual nodes"| mgmt
+    ansible -->|"SSH / network_cli management path"| mgmt
+    mgmt --> r1
+    mgmt --> r2
+    mgmt --> sw1
+
+    classDef boundary fill:#f7f7f7,stroke:#555,stroke-width:1px,color:#111
+    classDef network fill:#e8f4ff,stroke:#1d4f7a,stroke-width:1px,color:#111
+    classDef workflow fill:#ecf8ed,stroke:#2d6a35,stroke-width:1px,color:#111
+
+    class edge,host,gns3 boundary
+    class mgmt,r1,r2,sw1 network
+    class ansible workflow

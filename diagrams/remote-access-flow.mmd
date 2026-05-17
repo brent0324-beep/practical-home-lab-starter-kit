@@ -1,0 +1,28 @@
+flowchart LR
+    admin["Admin workstation"]
+    trusted["Trusted path<br/>local LAN or private VPN"]
+    edge["Home router / firewall"]
+    ufw["Linux host UFW policy<br/>default deny incoming"]
+    ssh["SSH service<br/>key-based admin access"]
+    host["Linux lab host"]
+    docs["Lab notes and runbooks"]
+    gns3["GNS3 server"]
+
+    admin -->|"connect from approved source"| trusted
+    trusted --> edge
+    edge -->|"limited inbound access"| ufw
+    ufw -->|"allow SSH from trusted network"| ssh
+    ssh --> host
+    host --> docs
+    host --> gns3
+
+    blocked["Untrusted inbound traffic"]
+    blocked -. "blocked by policy" .-> ufw
+
+    classDef allowed fill:#ecf8ed,stroke:#2d6a35,stroke-width:1px,color:#111
+    classDef control fill:#e8f4ff,stroke:#1d4f7a,stroke-width:1px,color:#111
+    classDef blockedStyle fill:#fff0f0,stroke:#9b1c1c,stroke-width:1px,color:#111
+
+    class admin,trusted,edge,ufw,ssh,host allowed
+    class docs,gns3 control
+    class blocked blockedStyle

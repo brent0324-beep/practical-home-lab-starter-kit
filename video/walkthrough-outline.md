@@ -1,44 +1,56 @@
 # Walkthrough Outline
 
-Target length: 3 to 5 minutes.
+Target length: 5 to 7 minutes.
 
-## 1. Repo Overview
+## Scene 1: Opening and Promise
 
 - Show the README.
-- Explain the purpose of the starter kit.
-- Point out the security notice and sanitized examples.
+- Explain that the repo helps network engineers build a secure, repeatable
+  Linux-based lab.
+- State the boundary: this is a lab foundation, not production design.
 
-## 2. Architecture
+## Scene 2: Full Visual Architecture
 
-- Open `docs/architecture.md`.
-- Show the Linux host, GNS3, Ansible, and management subnet relationship.
+- Open `diagrams/lab-topology.mmd`.
+- Show the remote admin workstation, home router/firewall, Linux lab host, GNS3
+  server, management network, and virtual devices.
 - Emphasize private lab ranges and documentation.
 
-## 3. Host and Security
+## Scene 3: Remote Access Path
+
+- Open `diagrams/remote-access-flow.mmd`.
+- Explain the trusted local network or private VPN path.
+- Point out UFW default deny and key-based SSH.
+
+## Scene 4: Linux Host and GNS3
 
 - Open `docs/linux-host-setup.md`.
-- Open `docs/security-hardening.md`.
-- Mention SSH keys, UFW, patching, and secret handling.
-
-## 4. GNS3 and Ansible
-
 - Open `docs/gns3-setup.md`.
+- Show how the Linux host anchors GNS3 projects, notes, and lab services.
+
+## Scene 5: Ansible Control Flow
+
+- Open `diagrams/ansible-control-flow.mmd`.
 - Open `ansible/inventory.example.ini`.
 - Open `ansible/playbooks/ping-lab.yml`.
-- Explain the read-only first workflow.
+- Open `ansible/playbooks/show-version.yml`.
+- Explain why read-only validation comes before configuration changes.
 
-## 5. Templates
+## Scene 6: Templates and Guardrails
 
 - Show the UFW and SSH hardening templates.
-- Explain that real local values should stay outside public commits.
+- Show `CONTRIBUTING.md` and `SECURITY.md`.
+- Explain that real local values stay outside public commits.
 
-## 6. Validation
+## Scene 7: Release Checks
 
 - Run `./scripts/validate.sh`.
 - Run `./scripts/redaction-check.sh`.
-- Explain that these checks are basic guardrails, not a substitute for review.
+- Mention `bash -n scripts/validate.sh scripts/redaction-check.sh`.
+- Mention `git diff --check`.
+- Explain that checks are guardrails, not a substitute for human review.
 
-## 7. Close
+## Scene 8: Free Repo and Future Bundle
 
 - Invite users to fork the repo and adapt it to their own private lab.
 - Mention that a future bundle may add a polished workbook and expanded

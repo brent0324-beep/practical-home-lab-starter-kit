@@ -31,6 +31,7 @@ Then use:
 
 - [templates/](templates/) for sanitized copyable examples.
 - [ansible/](ansible/) for basic Ansible inventory and playbooks.
+- [diagrams/](diagrams/) for Mermaid architecture diagrams.
 - [docs/release-checklist.md](docs/release-checklist.md) before publishing
   changes or release notes.
 
@@ -74,6 +75,20 @@ This is not a full enterprise design. It is a practical foundation that helps
 you practice the same habits that matter in professional network engineering:
 versioned configuration, repeatable commands, change notes, access control, and
 rollback thinking.
+
+## Visual Architecture
+
+The diagram source files are stored as Mermaid text so they can support the
+README, a blog post, a future PDF bundle, and a short video walkthrough.
+
+- [diagrams/lab-topology.mmd](diagrams/lab-topology.mmd) shows the full lab
+  topology.
+- [diagrams/remote-access-flow.mmd](diagrams/remote-access-flow.mmd) shows the
+  trusted access path into the Linux lab host.
+- [diagrams/ansible-control-flow.mmd](diagrams/ansible-control-flow.mmd) shows
+  how inventory, group variables, and playbooks reach virtual lab devices.
+- [docs/diagram-guide.md](docs/diagram-guide.md) explains how to use and
+  maintain the diagrams.
 
 ## Repo Map
 

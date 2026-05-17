@@ -3,6 +3,17 @@
 This sample topology shows how the starter kit pieces fit together. It is a
 sanitized example, not a required design.
 
+## Diagram Files
+
+The diagram-ready source files live under `diagrams/`:
+
+- `diagrams/lab-topology.mmd` shows the complete lab architecture.
+- `diagrams/remote-access-flow.mmd` shows the approved remote access path.
+- `diagrams/ansible-control-flow.mmd` shows how Ansible reaches lab devices.
+
+See `docs/diagram-guide.md` for guidance on how these diagrams map to the
+README, blog post, PDF bundle, and video walkthrough.
+
 ## Topology Summary
 
 ```text
@@ -73,6 +84,7 @@ restricted to expected source networks.
 Keep these artifacts together:
 
 - Topology diagram or ASCII map.
+- Mermaid source diagrams.
 - Management IP plan.
 - Ansible inventory.
 - Device image/version notes.
