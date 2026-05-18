@@ -1,0 +1,14 @@
+---
+- name: Collect interface summary from lab network devices
+  hosts: lab_network
+  gather_facts: false
+
+  tasks:
+    - name: Run interface summary command
+      ansible.netcommon.cli_command:
+        command: show interfaces status
+      register: interface_summary
+
+    - name: Print interface summary
+      ansible.builtin.debug:
+        var: interface_summary.stdout_lines

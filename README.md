@@ -42,9 +42,10 @@ Reviewed screenshots or rendered exports can be added later under
 ## Key Features
 
 - Linux-based lab host setup guidance.
+- Hardware and BOM guidance for choosing a practical lab host.
 - GNS3 topology planning for virtual routers and switches.
 - SSH and UFW hardening checklists.
-- Read-only Ansible inventory and playbook examples.
+- Ansible inventory, read-only show-command, and local backup examples.
 - Mermaid diagrams for topology, remote access, and automation flow.
 - README/demo visual placeholders under `assets/`.
 - Sanitized templates for inventories, device vars, and firewall rules.
@@ -56,8 +57,12 @@ Reviewed screenshots or rendered exports can be added later under
 
 Start with the build path:
 
+- [docs/hardware-bom.md](docs/hardware-bom.md) helps choose a practical lab
+  host.
 - [docs/example-lab-topology.md](docs/example-lab-topology.md) shows the sample
   lab shape.
+- [docs/lab-deployment-checklist.md](docs/lab-deployment-checklist.md) provides
+  a free deployment checklist.
 - [docs/linux-host-setup.md](docs/linux-host-setup.md) prepares the Linux base.
 - [docs/gns3-setup.md](docs/gns3-setup.md) connects the network simulation
   layer.
@@ -71,7 +76,8 @@ Use these supporting areas:
 - [diagrams/](diagrams/) contains Mermaid architecture diagrams.
 - [assets/](assets/) contains README/demo visual placeholders.
 - [templates/](templates/) for sanitized copyable examples.
-- [ansible/](ansible/) for basic Ansible inventory and playbooks.
+- [ansible/](ansible/) for vendor group vars, read-only show-command playbooks,
+  and local backup examples.
 - [scripts/](scripts/) for validation, packaging, and safe example starter
   scripts.
 - [video/](video/) for walkthrough and narration planning.
@@ -142,15 +148,17 @@ rollback thinking.
 
 1. Read [docs/example-lab-topology.md](docs/example-lab-topology.md) and review
    the Mermaid diagrams in [diagrams/](diagrams/).
-2. Prepare a current Ubuntu Server or Debian host using
+2. Review [docs/hardware-bom.md](docs/hardware-bom.md) and
+   [docs/lab-deployment-checklist.md](docs/lab-deployment-checklist.md).
+3. Prepare a current Ubuntu Server or Debian host using
    [docs/linux-host-setup.md](docs/linux-host-setup.md).
-3. Apply SSH and UFW guardrails from
+4. Apply SSH and UFW guardrails from
    [docs/security-hardening.md](docs/security-hardening.md).
-4. Build a small GNS3 topology with a private management subnet.
-5. Copy `ansible/inventory.example.ini` to a local untracked inventory file and
+5. Build a small GNS3 topology with a private management subnet.
+6. Copy `ansible/inventory.example.ini` to a local untracked inventory file and
    replace placeholder values with your own private lab values.
-6. Run the read-only Ansible checks against test devices.
-7. Run validation and redaction checks before publishing any notes.
+7. Run the read-only Ansible checks against test devices.
+8. Run validation and redaction checks before publishing any notes.
 
 Safe example scripts:
 
@@ -169,6 +177,7 @@ Example Ansible workflow:
 ansible-inventory -i ansible/inventory.example.ini --list
 ansible-playbook -i ansible/inventory.example.ini ansible/playbooks/ping-lab.yml
 ansible-playbook -i ansible/inventory.example.ini ansible/playbooks/show-version.yml
+ansible-playbook -i ansible/inventory.example.ini ansible/playbooks/show-interfaces.example.yml
 ```
 
 Validation commands:
@@ -197,6 +206,10 @@ README, a blog post, a future PDF bundle, and a short video walkthrough.
 ## Repository Map
 
 - [docs/architecture.md](docs/architecture.md) explains the reference design.
+- [docs/hardware-bom.md](docs/hardware-bom.md) covers lab host sizing and
+  hardware tradeoffs.
+- [docs/lab-deployment-checklist.md](docs/lab-deployment-checklist.md) provides
+  a free readiness checklist.
 - [docs/linux-host-setup.md](docs/linux-host-setup.md) walks through the host
   baseline.
 - [docs/gns3-setup.md](docs/gns3-setup.md) covers GNS3 setup and project

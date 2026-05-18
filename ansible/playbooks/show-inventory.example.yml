@@ -1,0 +1,14 @@
+---
+- name: Collect inventory summary from lab network devices
+  hosts: lab_network
+  gather_facts: false
+
+  tasks:
+    - name: Run inventory command
+      ansible.netcommon.cli_command:
+        command: show inventory
+      register: inventory_summary
+
+    - name: Print inventory summary for local review
+      ansible.builtin.debug:
+        var: inventory_summary.stdout_lines

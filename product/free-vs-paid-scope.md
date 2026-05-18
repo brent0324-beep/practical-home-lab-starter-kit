@@ -11,6 +11,8 @@ should add polish, depth, and convenience rather than withholding the basic path
 - GNS3 starter notes.
 - SSH, UFW, and remote access safety guidance.
 - Basic Ansible inventory and read-only playbooks.
+- Hardware and BOM guidance.
+- Free lab deployment checklist.
 - Sanitized templates for common lab files.
 - Validation and redaction scripts.
 - Release and security contribution guidance.
@@ -19,12 +21,13 @@ should add polish, depth, and convenience rather than withholding the basic path
 
 - Polished PDF workbook.
 - Expanded diagrams and visual topology packs.
-- Printable worksheets and checklists.
+- Deeper printable worksheets, guided checklists, and implementation packs.
 - Additional lab scenarios.
 - More complete Ansible workflow templates.
 - Troubleshooting decision trees.
 - Guided exercises with answer keys.
 - Editable planning documents.
+- Premium diagram exports and presentation-ready topology packs.
 
 ## Boundary
 

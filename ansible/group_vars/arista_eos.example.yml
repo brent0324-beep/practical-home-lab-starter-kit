@@ -1,0 +1,13 @@
+---
+# Sanitized Arista EOS-style network device defaults.
+# Copy locally and adjust for your private lab inventory.
+
+ansible_connection: ansible.netcommon.network_cli
+ansible_network_os: arista.eos.eos
+ansible_user: labadmin
+ansible_command_timeout: 30
+
+lab_vendor: arista_eos
+lab_notes:
+  - Read-only commands should be tested before configuration changes.
+  - Keep real credentials outside public repositories.

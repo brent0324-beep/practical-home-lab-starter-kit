@@ -1,0 +1,13 @@
+---
+# Sanitized Cisco IOS-style network device defaults.
+# Copy locally and adjust for your private lab inventory.
+
+ansible_connection: ansible.netcommon.network_cli
+ansible_network_os: cisco.ios.ios
+ansible_user: labadmin
+ansible_command_timeout: 30
+
+lab_vendor: cisco_ios
+lab_notes:
+  - Read-only commands should be tested before configuration changes.
+  - Keep real credentials outside public repositories.

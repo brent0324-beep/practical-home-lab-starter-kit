@@ -19,6 +19,8 @@ required_files=(
   "CONTRIBUTING.md"
   "SECURITY.md"
   "docs/architecture.md"
+  "docs/hardware-bom.md"
+  "docs/lab-deployment-checklist.md"
   "docs/linux-host-setup.md"
   "docs/gns3-setup.md"
   "docs/remote-access.md"
@@ -46,9 +48,15 @@ required_files=(
   "templates/lab-inventory.example.ini"
   "templates/network-device-vars.example.yml"
   "ansible/inventory.example.ini"
+  "ansible/README.md"
   "ansible/playbooks/ping-lab.yml"
   "ansible/playbooks/show-version.yml"
+  "ansible/playbooks/backup-running-config.example.yml"
+  "ansible/playbooks/show-interfaces.example.yml"
+  "ansible/playbooks/show-inventory.example.yml"
   "ansible/group_vars/all.example.yml"
+  "ansible/group_vars/cisco_ios.example.yml"
+  "ansible/group_vars/arista_eos.example.yml"
   "video/walkthrough-outline.md"
   "video/ai-voiceover-script-draft.md"
   "product/paid-bundle-outline.md"
@@ -104,6 +112,9 @@ required_terms=(
   "README.md:assets/diagrams/lab-topology-placeholder.svg"
   "README.md:assets/diagrams/remote-access-flow-placeholder.svg"
   "README.md:assets/diagrams/ansible-control-flow-placeholder.svg"
+  "README.md:docs/hardware-bom.md"
+  "README.md:docs/lab-deployment-checklist.md"
+  "README.md:ansible/playbooks/show-interfaces.example.yml"
   "RELEASE_NOTES.md:v0.1.0"
   ".github/pull_request_template.md:Safety Review"
   ".github/ISSUE_TEMPLATE/config.yml:blank_issues_enabled"
@@ -124,6 +135,8 @@ required_terms=(
   "SECURITY.md:What Counts as a Security Concern"
   "LICENSE.md:No final open source license"
   "docs/security-hardening.md:SSH"
+  "docs/hardware-bom.md:Hardware and BOM Guidance"
+  "docs/lab-deployment-checklist.md:Lab Deployment Checklist"
   "docs/remote-access.md:UFW"
   "docs/ansible-workflows.md:inventory"
   "docs/example-lab-topology.md:Management network"
@@ -143,6 +156,7 @@ required_terms=(
   "diagrams/remote-access-flow.mmd:flowchart"
   "diagrams/ansible-control-flow.mmd:flowchart"
   "product/free-vs-paid-scope.md:Stays Free"
+  "product/free-vs-paid-scope.md:Free lab deployment checklist"
   "product/v0.1-launch-plan.md:v0.1"
   "product/pdf-bundle-table-of-contents.md:Paid PDF Bundle"
   "product/github-launch-readme-review.md:GitHub Launch README Review"
@@ -166,6 +180,9 @@ required_terms=(
   "templates/ufw-rules.example.sh:ufw"
   "ansible/playbooks/ping-lab.yml:ansible.builtin.wait_for"
   "ansible/playbooks/show-version.yml:show version"
+  "ansible/README.md:Vendor Grouping"
+  "ansible/group_vars/cisco_ios.example.yml:cisco.ios.ios"
+  "ansible/group_vars/arista_eos.example.yml:arista.eos.eos"
 )
 
 for check in "${required_terms[@]}"; do
@@ -174,6 +191,25 @@ for check in "${required_terms[@]}"; do
   if [[ -f "$file" ]] && ! grep -Fq "$term" "$file"; then
     echo "Required term not found in $file: $term"
     fail=1
+  fi
+done
+
+ansible_example_playbooks=(
+  "ansible/playbooks/backup-running-config.example.yml"
+  "ansible/playbooks/show-interfaces.example.yml"
+  "ansible/playbooks/show-inventory.example.yml"
+)
+
+for playbook in "${ansible_example_playbooks[@]}"; do
+  if [[ -f "$playbook" ]]; then
+    if ! grep -Fq "hosts:" "$playbook"; then
+      echo "Ansible example playbook missing hosts: $playbook"
+      fail=1
+    fi
+    if ! grep -Fq "tasks:" "$playbook"; then
+      echo "Ansible example playbook missing tasks: $playbook"
+      fail=1
+    fi
   fi
 done
 
