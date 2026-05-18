@@ -11,11 +11,37 @@ should show the repo structure and workflow without exposing any real lab data.
 - Show sanitized templates and read-only Ansible examples.
 - Keep all examples private-range and placeholder-based.
 
+## 5-Minute Demo Path
+
+Use this compressed sequence when time is limited.
+
+1. Show the README opening, Key Features, and Visual Preview.
+2. Show the repo structure.
+3. Show the placeholder diagrams and Mermaid source.
+4. Show the example scripts in dry-run mode.
+5. Run validation and redaction checks.
+
+Safe terminal commands:
+
+```bash
+find . -maxdepth 2 -type f | sort
+find assets diagrams scripts -maxdepth 2 -type f | sort
+sed -n '1,120p' scripts/bootstrap-lab-host.example.sh
+./scripts/bootstrap-lab-host.example.sh
+./scripts/setup-ufw-baseline.example.sh
+./scripts/validate.sh
+./scripts/redaction-check.sh
+```
+
+Avoid running Ansible against real devices during a short public demo unless the
+environment is fully sanitized.
+
 ## 1. Open the README
 
 Show on screen:
 
 - Project title and opening section.
+- Visual Preview.
 - Key Features.
 - Quick Start.
 - Visual Architecture.
@@ -83,14 +109,36 @@ Talking point:
 These are sanitized examples. Real inventories, keys, tokens, PSKs, and private
 configs do not belong in public repos.
 
-## 6. Run Guardrail Checks
+## 6. Show Example Starter Scripts
+
+Show on screen:
+
+- `scripts/bootstrap-lab-host.example.sh`
+- `scripts/setup-ufw-baseline.example.sh`
+- `scripts/validate-lab-host.example.sh`
+
+Safe terminal commands:
+
+```bash
+./scripts/bootstrap-lab-host.example.sh
+./scripts/setup-ufw-baseline.example.sh
+sed -n '1,160p' scripts/validate-lab-host.example.sh
+```
+
+Talking point:
+
+The bootstrap and UFW examples are dry-run by default. The validation script is
+read-only, but it can still show local host details, so review the screen before
+recording or publishing.
+
+## 7. Run Guardrail Checks
 
 Terminal commands to demonstrate:
 
 ```bash
 ./scripts/validate.sh
 ./scripts/redaction-check.sh
-bash -n scripts/validate.sh scripts/redaction-check.sh scripts/package-release.sh
+bash -n scripts/*.sh
 git diff --check
 ```
 
@@ -98,7 +146,7 @@ Talking point:
 
 The checks are guardrails. They do not replace human review.
 
-## 7. Show Local Packaging
+## 8. Show Local Packaging
 
 Terminal command:
 
@@ -116,7 +164,7 @@ Talking point:
 
 The archive is a local package output and `dist/` is ignored by Git.
 
-## 8. Close
+## 9. Close
 
 Show on screen:
 

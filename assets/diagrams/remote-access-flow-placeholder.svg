@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+  <title id="title">Remote access flow placeholder</title>
+  <desc id="desc">Sanitized placeholder diagram showing trusted remote access through a home firewall to SSH and UFW on the Linux lab host.</desc>
+  <rect width="960" height="360" fill="#f8fafc"/>
+  <text x="40" y="48" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#111827">Remote Access Flow</text>
+  <text x="40" y="78" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">Placeholder visual for README/demo use.</text>
+  <g font-family="Arial, sans-serif" font-size="15" fill="#111827" stroke="#334155" stroke-width="2">
+    <rect x="50" y="145" width="170" height="70" rx="8" fill="#e0f2fe"/>
+    <text x="82" y="175" stroke="none">Admin device</text>
+    <text x="82" y="197" stroke="none">trusted source</text>
+    <rect x="280" y="145" width="170" height="70" rx="8" fill="#fef3c7"/>
+    <text x="316" y="175" stroke="none">Private VPN</text>
+    <text x="318" y="197" stroke="none">or local LAN</text>
+    <rect x="510" y="145" width="170" height="70" rx="8" fill="#fee2e2"/>
+    <text x="545" y="175" stroke="none">Home edge</text>
+    <text x="543" y="197" stroke="none">firewall path</text>
+    <rect x="740" y="130" width="170" height="100" rx="8" fill="#dcfce7"/>
+    <text x="780" y="165" stroke="none">Linux host</text>
+    <text x="777" y="188" stroke="none">SSH + UFW</text>
+    <text x="770" y="211" stroke="none">default deny</text>
+    <line x1="220" y1="180" x2="280" y2="180"/>
+    <line x1="450" y1="180" x2="510" y2="180"/>
+    <line x1="680" y1="180" x2="740" y2="180"/>
+  </g>
+</svg>

@@ -24,6 +24,21 @@ v0.1 public foundation. The repo has public-readiness docs, sanitized examples,
 Mermaid diagrams, validation checks, launch assets, and a local packaging
 workflow.
 
+## Visual Preview
+
+These SVGs are sanitized placeholders for README and demo visuals. The Mermaid
+source files in [diagrams/](diagrams/) remain the canonical editable diagrams.
+Reviewed screenshots or rendered exports can be added later under
+[assets/](assets/).
+
+![Sanitized lab topology placeholder](assets/diagrams/lab-topology-placeholder.svg)
+
+| View | Purpose |
+| --- | --- |
+| [Lab topology](assets/diagrams/lab-topology-placeholder.svg) | Shows the Linux host, GNS3 server, management network, and virtual devices. |
+| [Remote access flow](assets/diagrams/remote-access-flow-placeholder.svg) | Shows the trusted access path into SSH and UFW on the lab host. |
+| [Ansible control flow](assets/diagrams/ansible-control-flow-placeholder.svg) | Shows inventory and read-only playbooks reaching lab devices. |
+
 ## Key Features
 
 - Linux-based lab host setup guidance.
@@ -31,7 +46,9 @@ workflow.
 - SSH and UFW hardening checklists.
 - Read-only Ansible inventory and playbook examples.
 - Mermaid diagrams for topology, remote access, and automation flow.
+- README/demo visual placeholders under `assets/`.
 - Sanitized templates for inventories, device vars, and firewall rules.
+- Safe example starter scripts with dry-run behavior.
 - Publication, release, redaction, and validation checklists.
 - Video, demo, screenshot, and launch planning assets.
 
@@ -52,8 +69,11 @@ Start with the build path:
 Use these supporting areas:
 
 - [diagrams/](diagrams/) contains Mermaid architecture diagrams.
+- [assets/](assets/) contains README/demo visual placeholders.
 - [templates/](templates/) for sanitized copyable examples.
 - [ansible/](ansible/) for basic Ansible inventory and playbooks.
+- [scripts/](scripts/) for validation, packaging, and safe example starter
+  scripts.
 - [video/](video/) for walkthrough and narration planning.
 - [product/](product/) for launch, roadmap, and future bundle planning.
 - [docs/release-checklist.md](docs/release-checklist.md) before publishing
@@ -131,6 +151,17 @@ rollback thinking.
    replace placeholder values with your own private lab values.
 6. Run the read-only Ansible checks against test devices.
 7. Run validation and redaction checks before publishing any notes.
+
+Safe example scripts:
+
+```bash
+./scripts/bootstrap-lab-host.example.sh
+./scripts/setup-ufw-baseline.example.sh
+./scripts/validate-lab-host.example.sh
+```
+
+The bootstrap and UFW examples are dry-run by default. Review them before
+running with `APPLY=1`.
 
 Example Ansible workflow:
 

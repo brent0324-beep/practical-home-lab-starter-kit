@@ -2,6 +2,27 @@
 
 Target length: 5 to 7 minutes.
 
+## Quick Demo Version: 3 to 5 Minutes
+
+Use this version for a short launch walkthrough.
+
+1. Open the README and show the opening, Visual Preview, and Key Features.
+2. Open `assets/diagrams/lab-topology-placeholder.svg` and explain the lab
+   shape.
+3. Open `diagrams/lab-topology.mmd` to show the editable Mermaid source.
+4. Show `scripts/bootstrap-lab-host.example.sh` and
+   `scripts/setup-ufw-baseline.example.sh`; explain dry-run behavior.
+5. Run:
+
+```bash
+./scripts/bootstrap-lab-host.example.sh
+./scripts/setup-ufw-baseline.example.sh
+./scripts/validate.sh
+./scripts/redaction-check.sh
+```
+
+6. Close on the sanitized-example policy and roadmap.
+
 ## Scene 1: Opening and Promise
 
 - Show the README.

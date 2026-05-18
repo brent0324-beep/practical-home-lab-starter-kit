@@ -8,6 +8,12 @@ required_files=(
   ".github/ISSUE_TEMPLATE/config.yml"
   ".github/ISSUE_TEMPLATE/documentation-improvement.md"
   ".github/ISSUE_TEMPLATE/security-sanitization-review.md"
+  "assets/README.md"
+  "assets/screenshots/README.md"
+  "assets/diagrams/README.md"
+  "assets/diagrams/lab-topology-placeholder.svg"
+  "assets/diagrams/remote-access-flow-placeholder.svg"
+  "assets/diagrams/ansible-control-flow-placeholder.svg"
   "CHANGELOG.md"
   "LICENSE.md"
   "CONTRIBUTING.md"
@@ -62,6 +68,9 @@ required_files=(
   "product/content-expansion-ideas.md"
   "product/video-expansion-roadmap.md"
   "scripts/package-release.sh"
+  "scripts/bootstrap-lab-host.example.sh"
+  "scripts/setup-ufw-baseline.example.sh"
+  "scripts/validate-lab-host.example.sh"
 )
 
 fail=0
@@ -91,11 +100,21 @@ required_terms=(
   "README.md:Key Features"
   "README.md:Why This Project Exists"
   "README.md:Future Roadmap"
+  "README.md:Visual Preview"
+  "README.md:assets/diagrams/lab-topology-placeholder.svg"
+  "README.md:assets/diagrams/remote-access-flow-placeholder.svg"
+  "README.md:assets/diagrams/ansible-control-flow-placeholder.svg"
   "RELEASE_NOTES.md:v0.1.0"
   ".github/pull_request_template.md:Safety Review"
   ".github/ISSUE_TEMPLATE/config.yml:blank_issues_enabled"
   ".github/ISSUE_TEMPLATE/documentation-improvement.md:Documentation improvement"
   ".github/ISSUE_TEMPLATE/security-sanitization-review.md:Security or sanitization review"
+  "assets/README.md:Assets"
+  "assets/screenshots/README.md:Screenshot Assets"
+  "assets/diagrams/README.md:Diagram Assets"
+  "assets/diagrams/lab-topology-placeholder.svg:Lab topology placeholder"
+  "assets/diagrams/remote-access-flow-placeholder.svg:Remote access flow placeholder"
+  "assets/diagrams/ansible-control-flow-placeholder.svg:Ansible control flow placeholder"
   "CHANGELOG.md:v0.1.0"
   "CHANGELOG.md:dist/"
   "CONTRIBUTING.md:sanitized examples"
@@ -137,8 +156,13 @@ required_terms=(
   "product/content-expansion-ideas.md:Content Expansion Ideas"
   "product/video-expansion-roadmap.md:Video Expansion Roadmap"
   "scripts/package-release.sh:tar"
+  "scripts/bootstrap-lab-host.example.sh:DRY RUN"
+  "scripts/setup-ufw-baseline.example.sh:APPLY=1"
+  "scripts/validate-lab-host.example.sh:Safe read-only checks"
   "video/walkthrough-outline.md:Scene 1"
+  "video/walkthrough-outline.md:Quick Demo Version"
   "video/ai-voiceover-script-draft.md:Target length: 5 to 7 minutes"
+  "video/ai-voiceover-script-draft.md:Short Launch Video Version"
   "templates/ufw-rules.example.sh:ufw"
   "ansible/playbooks/ping-lab.yml:ansible.builtin.wait_for"
   "ansible/playbooks/show-version.yml:show version"
@@ -153,10 +177,12 @@ for check in "${required_terms[@]}"; do
   fi
 done
 
-if ! bash -n scripts/package-release.sh; then
-  echo "Package script syntax check failed."
-  fail=1
-fi
+while IFS= read -r script; do
+  if ! bash -n "$script"; then
+    echo "Shell script syntax check failed: $script"
+    fail=1
+  fi
+done < <(find scripts -type f -name "*.sh" | sort)
 
 if [[ "$fail" -ne 0 ]]; then
   echo "Validation failed."

@@ -2,6 +2,43 @@
 
 Target length: 5 to 7 minutes.
 
+## Short Launch Video Version
+
+Target length: 3 to 5 minutes.
+
+This is the Practical Home Lab Starter Kit for Network Engineers.
+
+It is a free starter repo for building a secure, repeatable Linux-based network
+lab with GNS3, Ansible, SSH hardening, UFW, diagrams, documentation, and safe
+example scripts.
+
+Start with the README. The first sections explain what the project is, who it
+is for, and what you can do with it today.
+
+The Visual Preview shows the lab at a glance: a remote admin workstation, a
+home firewall path, a Linux lab host, GNS3, a private management network, and
+virtual routers and switches.
+
+The Mermaid source diagrams live in the `diagrams` directory. The SVG files in
+`assets` are placeholders for README and demo visuals. Real screenshots or
+rendered exports can be added later after review.
+
+The practical workflow is simple. Prepare the Linux host, keep SSH and UFW
+tight, build a small GNS3 topology, document the private management network, and
+use Ansible for read-only checks first.
+
+The repo also includes safe starter scripts. The bootstrap and UFW scripts are
+examples only and dry-run by default, so they print what they would do before
+you decide whether to apply anything.
+
+Before publishing changes, run the validation script, the redaction check, and
+shell syntax checks. Those checks are not a substitute for review, but they
+reduce the chance of publishing incomplete files or sensitive data.
+
+This is a v0.1 public foundation, not a production design. Build the small
+version first, document it, validate it, and expand only after the basics are
+repeatable.
+
 ## Scene 1: Opening
 
 This is the Practical Home Lab Starter Kit for Network Engineers.
