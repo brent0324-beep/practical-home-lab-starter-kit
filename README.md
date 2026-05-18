@@ -308,3 +308,16 @@ Before committing changes, run:
 ```bash
 ./scripts/redaction-check.sh
 ```
+
+## Validation Preview
+
+<p align="center">
+  <img src="assets/screenshots/local-validation.png"
+       alt="Local validation output for the Practical Home Lab Starter Kit"
+       width="900">
+</p>
+
+<p align="center">
+  <em>Example local validation showing required-file checks, redaction checks, shell syntax checks, and a clean working tree.</em>
+</p>
+
