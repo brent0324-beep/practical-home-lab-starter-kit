@@ -1,25 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
-  <title id="title">Remote access flow placeholder</title>
-  <desc id="desc">Sanitized placeholder diagram showing trusted remote access through a home firewall to SSH and UFW on the Linux lab host.</desc>
-  <rect width="960" height="360" fill="#f8fafc"/>
-  <text x="40" y="48" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#111827">Remote Access Flow</text>
-  <text x="40" y="78" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">Placeholder visual for README/demo use.</text>
-  <g font-family="Arial, sans-serif" font-size="15" fill="#111827" stroke="#334155" stroke-width="2">
-    <rect x="50" y="145" width="170" height="70" rx="8" fill="#e0f2fe"/>
-    <text x="82" y="175" stroke="none">Admin device</text>
-    <text x="82" y="197" stroke="none">trusted source</text>
-    <rect x="280" y="145" width="170" height="70" rx="8" fill="#fef3c7"/>
-    <text x="316" y="175" stroke="none">Private VPN</text>
-    <text x="318" y="197" stroke="none">or local LAN</text>
-    <rect x="510" y="145" width="170" height="70" rx="8" fill="#fee2e2"/>
-    <text x="545" y="175" stroke="none">Home edge</text>
-    <text x="543" y="197" stroke="none">firewall path</text>
-    <rect x="740" y="130" width="170" height="100" rx="8" fill="#dcfce7"/>
-    <text x="780" y="165" stroke="none">Linux host</text>
-    <text x="777" y="188" stroke="none">SSH + UFW</text>
-    <text x="770" y="211" stroke="none">default deny</text>
-    <line x1="220" y1="180" x2="280" y2="180"/>
-    <line x1="450" y1="180" x2="510" y2="180"/>
-    <line x1="680" y1="180" x2="740" y2="180"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="430" viewBox="0 0 1100 430" role="img" aria-labelledby="title desc">
+  <title id="title">Sanitized remote access flow example</title>
+  <desc id="desc">A clean example-only remote access flow showing trusted access, edge filtering, host firewall policy, SSH, and lab services.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#cbd5e1;stroke-width:1.5}.node{stroke:#334155;stroke-width:1.7}.text{font-family:Arial,Helvetica,sans-serif;fill:#0f172a}.muted{fill:#475569}.small{font-size:14px}.label{font-size:16px;font-weight:700}.title{font-size:28px;font-weight:700}.line{stroke:#64748b;stroke-width:2.2;fill:none}.blocked{stroke:#b91c1c;stroke-width:2.2;stroke-dasharray:7 6;fill:none}.pill{fill:#fef2f2;stroke:#ef4444;stroke-width:1}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1100" height="430"/>
+  <text class="text title" x="42" y="52">Example Remote Access Flow</text>
+  <text class="text muted small" x="42" y="78">Sanitized visual. Keep access narrow, documented, and private.</text>
+  <rect class="panel" x="32" y="105" width="1036" height="270" rx="18"/>
+  <rect class="node" x="70" y="165" width="165" height="86" rx="14" fill="#dbeafe"/>
+  <text class="text label" x="104" y="198">Admin device</text>
+  <text class="text muted small" x="93" y="224">approved source</text>
+  <rect class="node" x="285" y="165" width="175" height="86" rx="14" fill="#e0f2fe"/>
+  <text class="text label" x="327" y="198">Trusted path</text>
+  <text class="text muted small" x="311" y="224">local or private</text>
+  <rect class="node" x="510" y="165" width="165" height="86" rx="14" fill="#fef3c7"/>
+  <text class="text label" x="552" y="198">Home edge</text>
+  <text class="text muted small" x="541" y="224">filtered access</text>
+  <rect class="node" x="725" y="145" width="170" height="126" rx="14" fill="#dcfce7"/>
+  <text class="text label" x="779" y="184">UFW</text>
+  <text class="text muted small" x="768" y="210">default deny</text>
+  <text class="text muted small" x="758" y="234">allow reviewed SSH</text>
+  <rect class="node" x="935" y="145" width="100" height="126" rx="14" fill="#ede9fe"/>
+  <text class="text label" x="961" y="196">SSH</text>
+  <text class="text muted small" x="953" y="221">lab host</text>
+  <path class="line" marker-end="url(#arrow)" d="M235 208 H285"/>
+  <path class="line" marker-end="url(#arrow)" d="M460 208 H510"/>
+  <path class="line" marker-end="url(#arrow)" d="M675 208 H725"/>
+  <path class="line" marker-end="url(#arrow)" d="M895 208 H935"/>
+  <path class="blocked" d="M165 318 C365 335 575 334 788 273"/>
+  <rect class="pill" x="76" y="308" width="210" height="32" rx="16"/>
+  <text class="text muted small" x="95" y="329">Unreviewed inbound blocked</text>
 </svg>

@@ -11,6 +11,14 @@ or a short video walkthrough. All screenshots must use sanitized examples only.
 - Repository tree showing `docs/`, `diagrams/`, `templates/`, and `ansible/`.
 - Release or publication checklist.
 
+## Minimum Screenshot Set
+
+- README hero or overview visual from `assets/diagrams/starter-kit-overview.svg`.
+- Lab topology diagram from `assets/diagrams/lab-topology-placeholder.svg`.
+- Terminal validation output from `./scripts/validate.sh`.
+- Ansible example output from a sanitized lab or a carefully reviewed dry demo.
+- Optional GNS3 topology screenshot with all labels sanitized.
+
 ## Recommended Terminal Captures
 
 Capture successful output for:

@@ -30,8 +30,23 @@ renderer after reviewing the source.
 
 Recommended exports:
 
-- PNG for README screenshots, blog images, and thumbnails.
-- SVG for PDF or scalable documentation when the platform supports it.
+- SVG for README diagrams, documentation, PDF source material, and any place
+  where crisp scaling matters.
+- PNG for social cards, blog thumbnails, video thumbnails, and platforms that do
+  not display SVG reliably.
+
+When exporting Mermaid diagrams later:
+
+1. Render from the sanitized `.mmd` source file.
+2. Review labels for readability at README width.
+3. Confirm no real addresses, hostnames, credentials, keys, tokens, PSKs,
+   account data, or private details appear.
+4. Save reviewed exports under `assets/diagrams/`.
+5. Keep filenames descriptive and stable so README links do not churn.
+
+SVG is usually best for diagrams because text and lines stay sharp. PNG is
+better when a platform strips SVG, when you need a thumbnail, or when you want a
+fixed raster image for a video editor.
 
 ## README and Blog Usage
 

@@ -18,6 +18,11 @@ The examples are intentionally sanitized. Copy the structure, not the literal
 values. Replace lab addresses, hostnames, usernames, SSH keys, and inventories
 with your own private lab details.
 
+![Practical Home Lab Starter Kit overview](assets/diagrams/starter-kit-overview.svg)
+
+_Overview: a sanitized, example-only visual summary of the Linux, GNS3, Ansible,
+remote access, documentation, validation, and sharing workflow._
+
 ## Current Status
 
 v0.1 public foundation. The repo has public-readiness docs, sanitized examples,
@@ -26,18 +31,31 @@ workflow.
 
 ## Visual Preview
 
-These SVGs are sanitized placeholders for README and demo visuals. The Mermaid
-source files in [diagrams/](diagrams/) remain the canonical editable diagrams.
-Reviewed screenshots or rendered exports can be added later under
-[assets/](assets/).
+These SVGs are sanitized README/demo visuals. The Mermaid source files in
+[diagrams/](diagrams/) remain the canonical editable diagrams. Real screenshots
+or rendered exports can be added later under [assets/](assets/) after review.
 
-![Sanitized lab topology placeholder](assets/diagrams/lab-topology-placeholder.svg)
+![Sanitized lab topology example](assets/diagrams/lab-topology-placeholder.svg)
+
+_Lab topology: an example-only view of the access path, Linux lab host, GNS3
+server, private management network, and automation workflow._
 
 | View | Purpose |
 | --- | --- |
+| [Starter kit overview](assets/diagrams/starter-kit-overview.svg) | Summarizes the full starter-kit workflow. |
 | [Lab topology](assets/diagrams/lab-topology-placeholder.svg) | Shows the Linux host, GNS3 server, management network, and virtual devices. |
 | [Remote access flow](assets/diagrams/remote-access-flow-placeholder.svg) | Shows the trusted access path into SSH and UFW on the lab host. |
 | [Ansible control flow](assets/diagrams/ansible-control-flow-placeholder.svg) | Shows inventory and read-only playbooks reaching lab devices. |
+
+![Sanitized remote access example](assets/diagrams/remote-access-flow-placeholder.svg)
+
+_Remote access: a sanitized example of approved access, filtering, host firewall
+policy, and SSH._
+
+![Sanitized Ansible control flow example](assets/diagrams/ansible-control-flow-placeholder.svg)
+
+_Ansible control flow: example inventory and group vars feeding safe playbooks,
+private management access, and local review artifacts._
 
 ## Key Features
 

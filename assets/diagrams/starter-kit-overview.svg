@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Practical Home Lab Starter Kit overview</title>
+  <desc id="desc">A sanitized README hero visual summarizing Linux, GNS3, Ansible, remote access, documentation, validation, and sanitized examples.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.card{fill:#fff;stroke:#cbd5e1;stroke-width:1.4}.accent{fill:#0f172a}.blue{fill:#dbeafe}.green{fill:#dcfce7}.purple{fill:#ede9fe}.amber{fill:#fef3c7}.red{fill:#fee2e2}.text{font-family:Arial,Helvetica,sans-serif;fill:#0f172a}.muted{fill:#475569}.title{font-size:34px;font-weight:700}.subtitle{font-size:17px}.label{font-size:17px;font-weight:700}.small{font-size:14px}.line{stroke:#64748b;stroke-width:2.2;fill:none}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="520"/>
+  <text class="text title" x="48" y="64">Practical Home Lab Starter Kit</text>
+  <text class="text muted subtitle" x="48" y="94">Secure, repeatable Linux-based network engineering lab foundations</text>
+  <rect class="card" x="48" y="130" width="250" height="116" rx="18"/>
+  <circle class="blue" cx="82" cy="166" r="16"/>
+  <text class="text label" x="112" y="172">Linux lab host</text>
+  <text class="text muted small" x="72" y="205">SSH, UFW, notes, scripts, and validation</text>
+  <rect class="card" x="356" y="130" width="250" height="116" rx="18"/>
+  <circle class="purple" cx="390" cy="166" r="16"/>
+  <text class="text label" x="420" y="172">GNS3 topology</text>
+  <text class="text muted small" x="380" y="205">Virtual routers, switches, and lab projects</text>
+  <rect class="card" x="664" y="130" width="250" height="116" rx="18"/>
+  <circle class="green" cx="698" cy="166" r="16"/>
+  <text class="text label" x="728" y="172">Ansible checks</text>
+  <text class="text muted small" x="688" y="205">Inventory, show commands, and local artifacts</text>
+  <rect class="card" x="48" y="305" width="250" height="116" rx="18"/>
+  <circle class="amber" cx="82" cy="341" r="16"/>
+  <text class="text label" x="112" y="347">Remote access</text>
+  <text class="text muted small" x="72" y="380">Narrow, documented, private access paths</text>
+  <rect class="card" x="356" y="305" width="250" height="116" rx="18"/>
+  <circle class="blue" cx="390" cy="341" r="16"/>
+  <text class="text label" x="420" y="347">Documentation</text>
+  <text class="text muted small" x="380" y="380">Mermaid diagrams, checklists, and templates</text>
+  <rect class="card" x="664" y="305" width="250" height="116" rx="18"/>
+  <circle class="red" cx="698" cy="341" r="16"/>
+  <text class="text label" x="728" y="347">Sanitized sharing</text>
+  <text class="text muted small" x="688" y="380">No real secrets, keys, or private details</text>
+  <rect class="card" x="980" y="160" width="150" height="230" rx="22"/>
+  <text class="text label" x="1018" y="207">v0.1</text>
+  <text class="text muted small" x="1013" y="235">public</text>
+  <text class="text muted small" x="1000" y="257">foundation</text>
+  <line class="line" marker-end="url(#arrow)" x1="298" y1="188" x2="356" y2="188"/>
+  <line class="line" marker-end="url(#arrow)" x1="606" y1="188" x2="664" y2="188"/>
+  <line class="line" marker-end="url(#arrow)" x1="298" y1="363" x2="356" y2="363"/>
+  <line class="line" marker-end="url(#arrow)" x1="606" y1="363" x2="664" y2="363"/>
+  <line class="line" marker-end="url(#arrow)" x1="914" y1="247" x2="980" y2="247"/>
+  <line class="line" marker-end="url(#arrow)" x1="914" y1="363" x2="980" y2="320"/>
+  <text class="text muted small" x="48" y="474">Example-only visual. All labels are sanitized and safe for public README/demo use.</text>
+</svg>
