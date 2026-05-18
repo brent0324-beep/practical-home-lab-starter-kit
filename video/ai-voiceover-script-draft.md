@@ -6,6 +6,9 @@ Target length: 5 to 7 minutes.
 
 Target length: 3 to 5 minutes.
 
+Most home labs do not fail because the topology is too small. They fail because
+the notes, access path, examples, and validation steps are hard to repeat.
+
 This is the Practical Home Lab Starter Kit for Network Engineers.
 
 It is a free starter repo for building a secure, repeatable Linux-based network
@@ -35,11 +38,14 @@ Before publishing changes, run the validation script, the redaction check, and
 shell syntax checks. Those checks are not a substitute for review, but they
 reduce the chance of publishing incomplete files or sensitive data.
 
-This is a v0.1 public foundation, not a production design. Build the small
-version first, document it, validate it, and expand only after the basics are
-repeatable.
+This is a v0.1 public foundation, not a production design. Use it to build the
+small version first, document what changed, validate it, and expand only after
+the basics are repeatable.
 
 ## Scene 1: Opening
+
+Most home labs do not need more moving parts at the beginning. They need a
+clean starting point that is documented, repeatable, and safe to share.
 
 This is the Practical Home Lab Starter Kit for Network Engineers.
 
@@ -148,12 +154,12 @@ do not replace human review. They are guardrails that make mistakes less likely.
 
 ## Closing
 
-The free repo gives you the foundation: documentation, examples, templates, and
-diagram-ready architecture.
+The free repo gives you the foundation: documentation, examples, templates,
+checks, and diagram-ready architecture.
 
 Future versions may add more lab scenarios, automation workflows, rendered
 diagrams, troubleshooting guides, and a more polished PDF or template bundle.
 But the public repo should remain useful on its own.
 
-Build the small version first. Document what you built. Validate it. Then expand
-the lab one reliable step at a time.
+Start with the small version. Document what you built. Run the checks. Then
+expand the lab one reliable step at a time.
