@@ -203,6 +203,17 @@ README, a blog post, a future PDF bundle, and a short video walkthrough.
 - [docs/diagram-guide.md](docs/diagram-guide.md) explains how to use and
   maintain the diagrams.
 
+## Articles and Launch Resources
+
+- [blog/](blog/) contains a blog-ready article adapted from this README.
+- [blog/build-secure-linux-network-engineering-lab.md](blog/build-secure-linux-network-engineering-lab.md)
+  is the first public article draft.
+- [product/linkedin-launch-post-v2.md](product/linkedin-launch-post-v2.md) and
+  [product/reddit-value-first-post.md](product/reddit-value-first-post.md)
+  provide value-first launch copy.
+- [product/launch-sequence-tonight.md](product/launch-sequence-tonight.md)
+  outlines a practical launch order.
+
 ## Repository Map
 
 - [docs/architecture.md](docs/architecture.md) explains the reference design.

@@ -1,0 +1,15 @@
+# Blog Drafts
+
+This directory contains blog-ready public content derived from the starter kit.
+
+## Drafts
+
+- `build-secure-linux-network-engineering-lab.md` is a launch-ready article
+  adapted from the README.
+
+## Publishing Rules
+
+- Keep examples sanitized.
+- Link back to the GitHub repository.
+- Avoid hard selling or guaranteed outcomes.
+- Review commands, diagrams, and screenshots before publishing.
