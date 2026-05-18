@@ -11,6 +11,7 @@ required_files=(
   "assets/README.md"
   "assets/screenshots/README.md"
   "assets/diagrams/README.md"
+  "assets/diagrams/starter-kit-overview.png"
   "assets/diagrams/starter-kit-overview.svg"
   "assets/diagrams/lab-topology-placeholder.svg"
   "assets/diagrams/remote-access-flow-placeholder.svg"
@@ -98,10 +99,12 @@ for file in "${required_files[@]}"; do
     continue
   fi
 
-  line_count="$(wc -l < "$file" | tr -d ' ')"
-  if [[ "$line_count" -lt 3 ]]; then
-    echo "Required file has too little content: $file"
-    fail=1
+  if [[ "$file" != *.png ]]; then
+    line_count="$(wc -l < "$file" | tr -d ' ')"
+    if [[ "$line_count" -lt 3 ]]; then
+      echo "Required file has too little content: $file"
+      fail=1
+    fi
   fi
 done
 
@@ -110,14 +113,14 @@ required_terms=(
   "README.md:GNS3"
   "README.md:Ansible"
   "README.md:What This Is Not"
-  "README.md:Visual Architecture"
+  "README.md:Technical Diagrams"
   "README.md:With this repo today"
   "README.md:v0.1 public foundation"
   "README.md:Key Features"
   "README.md:Why This Project Exists"
   "README.md:Future Roadmap"
-  "README.md:Visual Preview"
-  "README.md:assets/diagrams/starter-kit-overview.svg"
+  "README.md:What You'll Build"
+  "README.md:assets/diagrams/starter-kit-overview.png"
   "README.md:assets/diagrams/lab-topology-placeholder.svg"
   "README.md:assets/diagrams/remote-access-flow-placeholder.svg"
   "README.md:assets/diagrams/ansible-control-flow-placeholder.svg"
@@ -134,6 +137,7 @@ required_terms=(
   "assets/README.md:Assets"
   "assets/screenshots/README.md:Screenshot Assets"
   "assets/diagrams/README.md:Diagram Assets"
+  "assets/diagrams/README.md:primary README hero visual"
   "assets/diagrams/starter-kit-overview.svg:<svg"
   "assets/diagrams/lab-topology-placeholder.svg:Sanitized lab topology example"
   "assets/diagrams/lab-topology-placeholder.svg:<svg"

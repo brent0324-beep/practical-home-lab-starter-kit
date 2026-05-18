@@ -1,61 +1,39 @@
 # Practical Home Lab Starter Kit for Network Engineers
 
 Build a secure, repeatable Linux-based network engineering lab with GNS3,
-Ansible, SSH hardening, UFW, Mermaid diagrams, and practical documentation
-habits.
+Ansible, SSH hardening, UFW, diagrams, starter scripts, and practical
+documentation habits.
 
-This is a free public starter kit for network engineers who want a home lab that
-is easier to rebuild, explain, secure, and automate. It solves a common lab
-problem: GNS3 projects, SSH access, UFW rules, Ansible inventories, diagrams,
-and notes often grow separately until the lab is hard to trust.
+This repo is a free public starter kit for network engineers who want a home lab
+that is easier to build, explain, secure, automate, and safely share. It brings
+together the pieces that often drift apart in a lab: the Linux host, GNS3
+topology, SSH access, UFW rules, Ansible inventory, diagrams, templates, and
+validation notes.
 
-With this repo today, you can plan a small lab topology, prepare a hardened
-Linux host, connect GNS3 virtual routers and switches, run read-only Ansible
-checks, copy sanitized templates, review Mermaid architecture diagrams, and run
-basic validation before publishing your own lab notes.
+With this repo today, you can plan a small topology, prepare a hardened Linux
+host, connect GNS3 virtual routers and switches, run read-only Ansible checks,
+copy sanitized templates, and validate your notes before publishing anything.
 
-The examples are intentionally sanitized. Copy the structure, not the literal
-values. Replace lab addresses, hostnames, usernames, SSH keys, and inventories
-with your own private lab details.
+All examples are sanitized. Copy the structure, not the literal values. Replace
+example addresses, usernames, SSH paths, inventories, and configs with your own
+private lab details in local untracked files.
 
-![Practical Home Lab Starter Kit overview](assets/diagrams/starter-kit-overview.svg)
+<p align="center">
+  <img src="assets/diagrams/starter-kit-overview.png"
+       alt="Practical Home Lab Starter Kit overview"
+       width="1000">
+</p>
 
-_Overview: a sanitized, example-only visual summary of the Linux, GNS3, Ansible,
-remote access, documentation, validation, and sharing workflow._
+<p align="center">
+  <em>Sanitized overview of the Linux, GNS3, Ansible, remote access, validation,
+  and documentation workflow.</em>
+</p>
 
 ## Current Status
 
 v0.1 public foundation. The repo has public-readiness docs, sanitized examples,
 Mermaid diagrams, validation checks, launch assets, and a local packaging
 workflow.
-
-## Visual Preview
-
-These SVGs are sanitized README/demo visuals. The Mermaid source files in
-[diagrams/](diagrams/) remain the canonical editable diagrams. Real screenshots
-or rendered exports can be added later under [assets/](assets/) after review.
-
-![Sanitized lab topology example](assets/diagrams/lab-topology-placeholder.svg)
-
-_Lab topology: an example-only view of the access path, Linux lab host, GNS3
-server, private management network, and automation workflow._
-
-| View | Purpose |
-| --- | --- |
-| [Starter kit overview](assets/diagrams/starter-kit-overview.svg) | Summarizes the full starter-kit workflow. |
-| [Lab topology](assets/diagrams/lab-topology-placeholder.svg) | Shows the Linux host, GNS3 server, management network, and virtual devices. |
-| [Remote access flow](assets/diagrams/remote-access-flow-placeholder.svg) | Shows the trusted access path into SSH and UFW on the lab host. |
-| [Ansible control flow](assets/diagrams/ansible-control-flow-placeholder.svg) | Shows inventory and read-only playbooks reaching lab devices. |
-
-![Sanitized remote access example](assets/diagrams/remote-access-flow-placeholder.svg)
-
-_Remote access: a sanitized example of approved access, filtering, host firewall
-policy, and SSH._
-
-![Sanitized Ansible control flow example](assets/diagrams/ansible-control-flow-placeholder.svg)
-
-_Ansible control flow: example inventory and group vars feeding safe playbooks,
-private management access, and local review artifacts._
 
 ## Key Features
 
@@ -70,6 +48,16 @@ private management access, and local review artifacts._
 - Safe example starter scripts with dry-run behavior.
 - Publication, release, redaction, and validation checklists.
 - Video, demo, screenshot, and launch planning assets.
+
+## What You'll Build
+
+- Linux lab host: a repeatable base for SSH, UFW, notes, scripts, and tools.
+- GNS3 topology: virtual routers and switches on a private management network.
+- Ansible workflows: inventory, vendor group vars, read-only checks, and local
+  backup examples.
+- Remote access path: narrow, documented access into the lab host.
+- Validation and documentation flow: diagrams, templates, checks, and redaction
+  review before publishing.
 
 ## Repo Navigation
 
@@ -137,10 +125,10 @@ This project gives the lab a simple operating model:
   readiness.
 - It is not meant to expose lab services directly to the internet.
 
-## What You Can Build
+## Reference Architecture
 
-The starter kit assumes one Linux lab host, one or more GNS3 topologies, and a
-small management network for automation.
+The starter kit assumes one Linux lab host, one or more GNS3 topologies, a
+private management network, and a small automation workflow.
 
 ```text
 Admin laptop
@@ -207,10 +195,12 @@ bash -n scripts/validate.sh scripts/redaction-check.sh scripts/package-release.s
 git diff --check
 ```
 
-## Visual Architecture
+## Technical Diagrams
 
-The diagram source files are stored as Mermaid text so they can support the
-README, a blog post, a future PDF bundle, and a short video walkthrough.
+The PNG overview at the top is the primary README visual. These SVGs are
+supporting technical diagrams for readers who want to inspect the lab structure
+more closely. The Mermaid source files in [diagrams/](diagrams/) remain the
+canonical editable diagrams.
 
 - [diagrams/lab-topology.mmd](diagrams/lab-topology.mmd) shows the full lab
   topology.
@@ -220,6 +210,21 @@ README, a blog post, a future PDF bundle, and a short video walkthrough.
   how inventory, group variables, and playbooks reach virtual lab devices.
 - [docs/diagram-guide.md](docs/diagram-guide.md) explains how to use and
   maintain the diagrams.
+
+![Sanitized lab topology example](assets/diagrams/lab-topology-placeholder.svg)
+
+_Lab topology: example-only access path, Linux lab host, GNS3 server, private
+management network, and automation workflow._
+
+![Sanitized remote access example](assets/diagrams/remote-access-flow-placeholder.svg)
+
+_Remote access: example-only approved access, filtering, host firewall policy,
+and SSH._
+
+![Sanitized Ansible control flow example](assets/diagrams/ansible-control-flow-placeholder.svg)
+
+_Ansible control flow: example inventory and group vars feeding safe playbooks,
+private management access, and local review artifacts._
 
 ## Articles and Launch Resources
 
