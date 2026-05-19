@@ -68,6 +68,7 @@ required_files=(
   "video/walkthrough-outline.md"
   "video/ai-voiceover-script-draft.md"
   "video/final-walkthrough-v0.1-script.md"
+  "video/final-walkthrough-v0.1-narration-only.md"
   "media/README.md"
   "media/thumbnail-concepts.md"
   "media/video-folder-workflow.md"
@@ -233,6 +234,9 @@ required_terms=(
   "video/final-walkthrough-v0.1-script.md:0:00 Intro"
   "video/final-walkthrough-v0.1-script.md:show README"
   "video/final-walkthrough-v0.1-script.md:open Ansible workflows"
+  "video/final-walkthrough-v0.1-narration-only.md:AI voice narration input"
+  "video/final-walkthrough-v0.1-narration-only.md:This is the Practical Home Lab Starter Kit"
+  "video/final-walkthrough-v0.1-narration-only.md:Feedback is welcome"
   "media/README.md:Media Workspace"
   "media/README.md:raw/"
   "media/thumbnail-concepts.md:Thumbnail Concepts"
@@ -255,6 +259,12 @@ for check in "${required_terms[@]}"; do
     fail=1
   fi
 done
+
+narration_only_file="video/final-walkthrough-v0.1-narration-only.md"
+if [[ -f "$narration_only_file" ]] && grep -Eq '^\[' "$narration_only_file"; then
+  echo "Narration-only script contains bracketed editor cue lines: $narration_only_file"
+  fail=1
+fi
 
 ansible_example_playbooks=(
   "ansible/playbooks/backup-running-config.example.yml"
