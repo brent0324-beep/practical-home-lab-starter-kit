@@ -69,6 +69,8 @@ Start with the build path:
   lab shape.
 - [docs/lab-deployment-checklist.md](docs/lab-deployment-checklist.md) provides
   a free deployment checklist.
+- [docs/golden-path-operational-workflow.md](docs/golden-path-operational-workflow.md)
+  shows the smallest repeatable validation flow.
 - [docs/linux-host-setup.md](docs/linux-host-setup.md) prepares the Linux base.
 - [docs/gns3-setup.md](docs/gns3-setup.md) connects the network simulation
   layer.
@@ -195,6 +197,20 @@ bash -n scripts/validate.sh scripts/redaction-check.sh scripts/package-release.s
 git diff --check
 ```
 
+## Golden Path Workflow
+
+The Golden Path is the shortest operational flow through the starter kit:
+orient in the repo, document the Linux lab host and access model, build a small
+GNS3 topology, use sanitized Ansible inventory examples, run read-only checks,
+then validate and redact before publishing.
+
+See [docs/golden-path-operational-workflow.md](docs/golden-path-operational-workflow.md)
+for the full workflow and use
+[`scripts/run-golden-path-demo.example.sh`](scripts/run-golden-path-demo.example.sh)
+to preview the safe command sequence.
+
+![Golden Path operational workflow](assets/diagrams/golden-path-workflow.svg)
+
 ## Technical Diagrams
 
 The PNG overview at the top is the primary README visual. These SVGs are
@@ -202,6 +218,8 @@ supporting technical diagrams for readers who want to inspect the lab structure
 more closely. The Mermaid source files in [diagrams/](diagrams/) remain the
 canonical editable diagrams.
 
+- [diagrams/golden-path-workflow.mmd](diagrams/golden-path-workflow.mmd) shows
+  the repeatable validation path from repo orientation to review artifact.
 - [diagrams/lab-topology.mmd](diagrams/lab-topology.mmd) shows the full lab
   topology.
 - [diagrams/remote-access-flow.mmd](diagrams/remote-access-flow.mmd) shows the
@@ -244,6 +262,8 @@ private management access, and local review artifacts._
   hardware tradeoffs.
 - [docs/lab-deployment-checklist.md](docs/lab-deployment-checklist.md) provides
   a free readiness checklist.
+- [docs/golden-path-operational-workflow.md](docs/golden-path-operational-workflow.md)
+  shows a small repeatable lab validation flow.
 - [docs/linux-host-setup.md](docs/linux-host-setup.md) walks through the host
   baseline.
 - [docs/gns3-setup.md](docs/gns3-setup.md) covers GNS3 setup and project
@@ -320,4 +340,3 @@ Before committing changes, run:
 <p align="center">
   <em>Example local validation showing required-file checks, redaction checks, shell syntax checks, and a clean working tree.</em>
 </p>
-

@@ -8,6 +8,8 @@ This directory contains blog-ready public content derived from the starter kit.
   adapted from the README.
 - `devto-practical-home-lab-starter-kit-launch.md` is a DEV.to-ready launch
   draft focused on the project background, architecture, and community value.
+- A future Golden Path article can build on the launch draft by showing the
+  small operational workflow from repo orientation through sanitized validation.
 
 ## Publishing Rules
 

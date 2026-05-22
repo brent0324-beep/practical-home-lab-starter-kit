@@ -43,6 +43,15 @@ The easiest sections to record first are the README overview, diagram walkthroug
 and docs tour because they do not depend on live command output. Record terminal
 commands later, after browser cleanup, shell prompt cleanup, and a test capture.
 
+## Future Walkthrough Idea: Golden Path
+
+- Show `docs/golden-path-operational-workflow.md` as the script backbone.
+- Open `assets/diagrams/golden-path-workflow.svg` for the visual flow.
+- Run `scripts/run-golden-path-demo.example.sh` to preview the command sequence.
+- Explain the sequence: repo orientation, lab host baseline, GNS3 topology,
+  sanitized Ansible inventory, read-only checks, validation, redaction, and
+  private review artifact.
+
 ## Narration Visual Map
 
 - Intro narration: show the README title, Visual Preview, and Key Features.

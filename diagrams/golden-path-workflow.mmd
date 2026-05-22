@@ -1,0 +1,25 @@
+flowchart LR
+    orientation["Repo orientation<br/>README and docs"]
+    baseline["Lab host baseline<br/>Linux, SSH, UFW"]
+    topology["Small GNS3 topology<br/>router, switch, mgmt network"]
+    inventory["Sanitized Ansible inventory<br/>example-only values"]
+    checks["Read-only checks<br/>reachability and show commands"]
+    validation["Validation and redaction<br/>local guardrails"]
+    artifact["Review artifact<br/>private notes and next actions"]
+
+    orientation --> baseline
+    baseline --> topology
+    topology --> inventory
+    inventory --> checks
+    checks --> validation
+    validation --> artifact
+
+    classDef start fill:#f8fafc,stroke:#334155,color:#0f172a
+    classDef secure fill:#ecfdf5,stroke:#16a34a,color:#052e16
+    classDef lab fill:#eff6ff,stroke:#2563eb,color:#172554
+    classDef review fill:#f5f3ff,stroke:#7c3aed,color:#2e1065
+
+    class orientation start
+    class baseline,validation secure
+    class topology,inventory,checks lab
+    class artifact review
