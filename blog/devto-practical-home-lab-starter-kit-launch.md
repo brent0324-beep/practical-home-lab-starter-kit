@@ -106,15 +106,12 @@ Linux lab host
 ```
 
 The Linux host is the anchor. GNS3 provides the network devices.
-
 Ansible gives you a repeatable way to validate and inspect the lab. Remote access is treated as something to design carefully, not something to bolt on casually.
 
 The idea is to keep the operational workflow understandable before scaling the topology.
-
 One virtual router, one virtual switch, one management network, and a few read-only Ansible checks can teach a lot.
 
 After that works, you can expand with more vendors, routing protocols, backup workflows, monitoring, or security tooling.
-
 That is intentional. The first version is small because understandable beats complex early on, and repeatable beats large.
 
 Once the baseline is clear, scaling the lab becomes a deliberate engineering choice instead of a pile of accidental dependencies.
@@ -236,9 +233,7 @@ It is not a promise that one set of tools fits every environment.
 
 It is a starting kit: opinionated enough to be useful, but small enough to adapt.
 
-## Repo Link
-
-You can find the starter kit here:
+If you want to explore the project, the repo is available here:
 
 [Practical Home Lab Starter Kit](https://brentf.io/lab)
 
