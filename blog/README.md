@@ -6,6 +6,8 @@ This directory contains blog-ready public content derived from the starter kit.
 
 - `build-secure-linux-network-engineering-lab.md` is a launch-ready article
   adapted from the README.
+- `devto-practical-home-lab-starter-kit-launch.md` is a DEV.to-ready launch
+  draft focused on the project background, architecture, and community value.
 
 ## Publishing Rules
 
