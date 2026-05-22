@@ -5,13 +5,13 @@ description: A practical, security-first starter kit for learning Linux infrastr
 tags: networkengineering, linux, ansible, gns3
 ---
 
-Home labs are where a lot of network engineers learn the things that do not fit neatly into a certification lab or a production change window.
+Home labs are where a lot of network engineers learn the things that do not fit neatly into a certification lab, a vendor sandbox, or a production change window.
 
 They are also where things can get messy quickly.
 
 One folder has topology notes. Another has Ansible experiments. A diagram lives somewhere else. Remote access was configured once and then forgotten. Screenshots include details that should not be shared publicly. The lab works, but it is hard to rebuild, explain, or safely publish.
 
-I built the Practical Home Lab Starter Kit to solve that problem in a small, repeatable way.
+I built the Practical Home Lab Starter Kit to make that problem smaller and more repeatable.
 
 The repo is here:
 
@@ -19,15 +19,17 @@ The repo is here:
 https://brentf.io/lab
 ```
 
-This is not meant to be a production network design or a claim that there is one right way to build a lab. It is a practical starting point for learning, documenting, validating, and sharing a Linux-based network engineering lab with fewer loose ends.
+This is not a production network design or a claim that there is one right way to build a lab. It is a practical starting point for learning, documenting, validating, and sharing a Linux-based network engineering lab with fewer loose ends.
 
 ## Why I Built It
 
-I am a network engineer focused on Linux infrastructure, automation, operational workflows, and continuous learning. I like building practical home labs, exploring network and security tooling, and turning repeated manual steps into cleaner engineering workflows around GNS3, Ansible, and infrastructure automation.
+I am a network engineer focused on Linux infrastructure, automation, operational workflows, and continuous learning. A lot of my best learning happens when I build something, break it in a controlled way, document what happened, and make the next pass cleaner.
 
-Outside of technology, I enjoy traveling, biking, hiking, and exploring new places and experiences. That mindset carries into lab work too: keep exploring, keep learning, and keep building systems that are easier to understand the next time you come back to them.
+That is the mindset behind this project. I enjoy exploring new tools and workflows, but I also want the result to be understandable later. A lab should help you learn today without becoming a mystery system six months from now.
 
-This starter kit came from a simple observation: many people want to learn network automation, Linux, and lab security, but the first barrier is not always the technology itself. Sometimes the barrier is structure.
+This starter kit came from a simple observation: many people want to learn network automation, Linux, and lab security, but the first barrier is not always the technology itself.
+
+Sometimes the barrier is structure.
 
 Questions come up early:
 
@@ -54,7 +56,9 @@ It should help you practice habits that transfer into real engineering work:
 - keeping public examples sanitized
 - making diagrams and checklists part of the build process
 
-That is the value I wanted this project to provide to the broader community. Whether someone is new to network engineering, learning Linux administration, experimenting with GNS3, or trying to get more comfortable with Ansible, the repo should offer a clear path without assuming a large budget or a production environment.
+That is the value I want this project to provide to the broader community.
+
+Whether someone is new to network engineering, learning Linux administration, experimenting with GNS3, or trying to get more comfortable with Ansible, the repo should offer a clear path without assuming a large budget or a production environment.
 
 ## What The Repo Includes
 
@@ -72,7 +76,9 @@ The starter kit includes a public foundation for a small Linux-based network eng
 - local validation scripts
 - screenshot and video workflow notes
 
-The intent is to keep the repo useful even before someone has built every part of the lab. You can read through the architecture, copy the sanitized templates, adapt the checklists, and use the validation approach in your own environment.
+The intent is to keep the repo useful even before someone has built every part of the lab.
+
+You can read through the architecture, copy the sanitized templates, adapt the checklists, and use the validation approach in your own environment.
 
 ## Architecture At A High Level
 
@@ -107,13 +113,11 @@ The README includes a simple overview image for the project:
 
 ![Practical Home Lab Starter Kit overview](https://raw.githubusercontent.com/brent0324-beep/practical-home-lab-starter-kit/main/assets/diagrams/starter-kit-overview.png)
 
-The repo also includes sanitized diagram references for the lab topology, remote access flow, and Ansible control flow:
+The repo also includes sanitized technical diagram references:
 
-![Sanitized lab topology example](https://raw.githubusercontent.com/brent0324-beep/practical-home-lab-starter-kit/main/assets/diagrams/lab-topology-placeholder.svg)
-
-![Sanitized remote access flow example](https://raw.githubusercontent.com/brent0324-beep/practical-home-lab-starter-kit/main/assets/diagrams/remote-access-flow-placeholder.svg)
-
-![Sanitized Ansible control flow example](https://raw.githubusercontent.com/brent0324-beep/practical-home-lab-starter-kit/main/assets/diagrams/ansible-control-flow-placeholder.svg)
+- Lab topology example: `assets/diagrams/lab-topology-placeholder.svg`
+- Remote access flow example: `assets/diagrams/remote-access-flow-placeholder.svg`
+- Ansible control flow example: `assets/diagrams/ansible-control-flow-placeholder.svg`
 
 There is also a local validation screenshot in the repo that shows the basic guardrail workflow:
 
@@ -123,18 +127,25 @@ There is also a local validation screenshot in the repo that shows the basic gua
 
 If you are newer to this kind of lab, I would not start by trying to automate everything.
 
+Security should not be an afterthought. Even in a home lab, remote access, firewall policy, user access, and public screenshots should be considered early.
+
 I would start here:
 
 1. Build or choose a Linux lab host.
-2. Document the host role and basic network layout.
-3. Install and test GNS3 with a small topology.
-4. Confirm management reachability manually.
-5. Add a sanitized Ansible inventory.
-6. Run read-only Ansible checks.
-7. Add firewall and SSH hardening notes.
+2. Document the host role, network layout, and intended access model.
+3. Apply a basic security baseline before exposing or expanding services:
+   - update the host
+   - review local users
+   - configure SSH intentionally
+   - define initial UFW or firewall rules
+   - avoid broad remote access
+4. Install and test GNS3 with a small local topology.
+5. Confirm management reachability manually.
+6. Add a sanitized Ansible inventory.
+7. Run read-only Ansible checks.
 8. Capture diagrams and screenshots only after reviewing them for private details.
 
-That sequence keeps the lab understandable. It also helps avoid a common failure mode: troubleshooting Linux, GNS3, SSH, inventory files, credentials, network reachability, and automation logic all at the same time.
+That sequence keeps the lab understandable. It also helps avoid a common failure mode: troubleshooting Linux, GNS3, SSH, firewall rules, inventory files, credentials, network reachability, and automation logic all at the same time.
 
 ## Validation Before Automation
 
@@ -157,7 +168,7 @@ These checks are intentionally lightweight. They do not replace human review, bu
 - obvious sensitive patterns are flagged
 - whitespace issues are caught before commit
 
-For a public learning repo, that kind of guardrail matters.
+For a public learning repo, that kind of guardrail matters. It also makes the project easier for other people to trust, review, and adapt.
 
 ## Security And Sanitization Notes
 
@@ -213,7 +224,8 @@ Feedback is welcome. I would especially like to hear from people who are buildin
 
 - What would make a starter kit like this more useful?
 - Which parts of home lab documentation are hardest to keep current?
-- Do you prefer starting with diagrams, checklists, scripts, or walkthroughs?
-- What would you add for someone learning Linux, GNS3, Ansible, or remote access for the first time?
+- When you build a lab, do you start with diagrams, checklists, scripts, or hands-on testing?
+- What security baseline do you apply before enabling remote access?
+- What would help someone learning Linux, GNS3, Ansible, or remote access for the first time?
 
-My goal is for this to become a practical community resource: useful for beginners, still relevant for working engineers, and careful about security from the start.
+My goal is for this to become a practical community resource: useful for beginners, still relevant for working engineers, and careful about security from the start. If you have built something similar, I would be interested in what worked, what did not, and what you wish you had documented earlier.
