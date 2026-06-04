@@ -46,3 +46,6 @@ unpublished/
 secrets/
 tokens/
 credentials/
+
+# Draft publication assets
+blog/devto_cover_image.png
