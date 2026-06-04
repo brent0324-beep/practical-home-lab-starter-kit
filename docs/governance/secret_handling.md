@@ -48,7 +48,15 @@ The existing redaction check remains the first local guardrail:
 ./scripts/redaction-check.sh
 ```
 
-Gitleaks or equivalent scanning should be added after governance normalization.
-Secret scanning should target tracked public content and sanitized examples. It
-must not require opening private local notes, ignored draft media, local
-inventories, or packaging scratch files.
+Gitleaks or equivalent scanning should target tracked public content and
+sanitized examples. It must not require opening private local notes, ignored
+draft media, local inventories, or packaging scratch files.
+
+Run from the repository root:
+
+```bash
+gitleaks detect --source . --config .gitleaks.toml --redact --no-banner
+```
+
+Use redacted output only. If a finding appears, report the path and rule ID, not
+the secret value.

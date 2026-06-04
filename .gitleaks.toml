@@ -1,0 +1,90 @@
+title = "Codex Standards Gitleaks Baseline"
+
+[allowlist]
+description = "Global placeholder-only allowlist for documentation and synthetic fixtures."
+regexes = [
+  '''(?i)(example|placeholder|changeme|change-me|replace-me|redacted|dummy|fake|sample|test-only|not-a-secret|your_[a-z0-9_]+|<[^>\n]+>)''',
+  '''(?i)(sk_test_|pk_test_|whsec_test_|xoxb-test-|ghp_example|github_pat_example|A[K]IAIOSFODNN7EXAMPLE)''',
+]
+paths = [
+  '''(^|/)\.gitleaks\.toml$''',
+  '''(^|/)templates/gitleaks/\.gitleaks\.toml$''',
+]
+
+[[rules]]
+id = "private-key"
+description = "Private key material"
+regex = '''-----BEGIN (RSA |DSA |EC |OPENSSH |PGP |)?PRIVATE[ ]KEY-----'''
+tags = ["key", "private-key"]
+
+[[rules]]
+id = "ssh-private-key"
+description = "SSH private key marker"
+regex = '''-----BEGIN OPENSSH[ ]PRIVATE[ ]KEY-----'''
+tags = ["key", "ssh"]
+
+[[rules]]
+id = "aws-access-key-id"
+description = "AWS access key ID"
+regex = '''\b(A3T[A-Z0-9]|A[K]IA|ASIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA)[A-Z0-9]{16}\b'''
+tags = ["aws", "cloud", "token"]
+
+[[rules]]
+id = "github-token"
+description = "GitHub token"
+regex = '''\b(ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{36,255}\b|\bgithub_pat_[A-Za-z0-9_]{22,255}\b'''
+tags = ["github", "token"]
+
+[[rules]]
+id = "slack-token"
+description = "Slack token"
+regex = '''\bxox[baprs]-[A-Za-z0-9-]{10,255}\b'''
+tags = ["slack", "token"]
+
+[[rules]]
+id = "stripe-live-key"
+description = "Stripe live key"
+regex = '''\b(?:sk|pk)_live_[A-Za-z0-9]{16,255}\b'''
+tags = ["stripe", "payment", "token"]
+
+[[rules]]
+id = "webhook-secret"
+description = "Webhook signing secret"
+regex = '''(?i)\b(webhook|whsec|signing)[_-]?(secret|token|key)\b\s*[:=]\s*['"][A-Za-z0-9_./+=:-]{16,}['"]'''
+tags = ["webhook", "secret"]
+
+[[rules]]
+id = "authorization-header"
+description = "Hard-coded authorization header"
+regex = '''(?i)\bauthorization\b\s*[:=]\s*['"]?(bearer|basic)\s+[A-Za-z0-9_./+=:-]{16,}['"]?'''
+tags = ["auth", "header", "token"]
+
+[[rules]]
+id = "database-url-with-credential"
+description = "Database URL containing credentials"
+regex = '''(?i)\b(postgres(?:ql)?|mysql|mariadb|mongodb(?:\+srv)?|redis|amqp|snowflake)://[^:\s/@]+:[^@\s]+@[^)\s'"`]+'''
+tags = ["database", "credential", "url"]
+
+[[rules]]
+id = "dotenv-secret-assignment"
+description = "High-confidence dotenv secret assignment"
+regex = '''(?i)^\s*[A-Z0-9_]*(SECRET|TOKEN|PASSWORD|PASSWD|API[_-]?KEY|PRIVATE[_-]?KEY|CLIENT[_-]?SECRET|ACCESS[_-]?KEY)[A-Z0-9_]*\s*=\s*['"]?[A-Za-z0-9_./+=:@-]{16,}['"]?\s*$'''
+tags = ["dotenv", "secret", "credential"]
+
+[[rules]]
+id = "generic-api-key-assignment"
+description = "High-confidence API key or token assignment"
+regex = '''(?i)\b(api[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret|private[_-]?key|secret[_-]?key)\b\s*[:=]\s*['"][A-Za-z0-9_./+=:-]{20,}['"]'''
+tags = ["api-key", "token", "generic"]
+
+[[rules]]
+id = "cloud-secret-assignment"
+description = "High-confidence cloud credential assignment"
+regex = '''(?i)\b(aws_secret_access_key|aws_session_token|azure_client_secret|google_application_credentials|gcp_private_key|do_token|cloudflare_api_token)\b\s*[:=]\s*['"][A-Za-z0-9_./+=:-]{20,}['"]'''
+tags = ["cloud", "credential"]
+
+[[rules]]
+id = "ssh-material-path-assignment"
+description = "SSH key material or private key path assignment"
+regex = '''(?i)\b(ssh_private_key|identity_file|private_key_path)\b\s*[:=]\s*['"][^'"]*(id_rsa|id_ed25519|\.pem|\.key)['"]'''
+tags = ["ssh", "key"]
