@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "policy_name": "Practical Home Lab Starter Kit Artifact Governance Policy",
+  "classes": [
+    {
+      "name": "public_documentation",
+      "description": "Sanitized public README, documentation, release, contribution, security, publication, product, blog, video, and media planning documents.",
+      "tracked": true,
+      "deterministic": true,
+      "public_safe_required": true,
+      "patterns": [
+        "README.md",
+        "CHANGELOG.md",
+        "RELEASE_NOTES.md",
+        "LICENSE.md",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "docs/**/*.md",
+        "blog/**/*.md",
+        "video/**/*.md",
+        "media/**/*.md",
+        "product/**/*.md",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "name": "sanitized_examples",
+      "description": "Public-safe templates, Ansible examples, scripts, and diagrams using placeholder values.",
+      "tracked": true,
+      "deterministic": true,
+      "public_safe_required": true,
+      "patterns": [
+        "templates/**",
+        "ansible/**/*.example.*",
+        "ansible/playbooks/*.yml",
+        "diagrams/**",
+        "scripts/*.sh",
+        ".github/**"
+      ]
+    },
+    {
+      "name": "reviewed_public_assets",
+      "description": "Reviewed sanitized public images and diagram assets intended for README, docs, demos, or release use.",
+      "tracked": true,
+      "deterministic": true,
+      "public_safe_required": true,
+      "patterns": [
+        "assets/**"
+      ]
+    },
+    {
+      "name": "configuration_and_governance",
+      "description": "Repository configuration, ignore policy, artifact policy, and governance metadata.",
+      "tracked": true,
+      "deterministic": true,
+      "public_safe_required": true,
+      "patterns": [
+        ".gitignore",
+        "config/artifact_policy.json",
+        "docs/governance/**/*.md"
+      ]
+    },
+    {
+      "name": "runtime_media_workspaces",
+      "description": "Raw, edited, audio, thumbnail, screenshot, and unpublished media workspaces.",
+      "tracked": false,
+      "deterministic": false,
+      "public_safe_required": false,
+      "patterns": [
+        "media/raw/**",
+        "media/edited/**",
+        "media/audio/**",
+        "media/thumbnails/**",
+        "media/screenshots/**",
+        "screenshots/work/**",
+        "screenshots/drafts/**"
+      ],
+      "ignore_patterns": [
+        "media/raw/*",
+        "media/edited/*",
+        "media/audio/*",
+        "media/thumbnails/*",
+        "media/screenshots/*",
+        "screenshots/work/",
+        "screenshots/drafts/"
+      ]
+    },
+    {
+      "name": "local_lab_runtime_artifacts",
+      "description": "Local inventories, Ansible output, backups, private notes, temporary exports, and unpublished content.",
+      "tracked": false,
+      "deterministic": false,
+      "public_safe_required": false,
+      "patterns": [
+        "inventories/**",
+        "inventory/**",
+        "ansible/output/**",
+        "ansible/outputs/**",
+        "ansible/backups/**",
+        "tmp/**",
+        "scratch/**",
+        "private/**",
+        "notes/private/**",
+        "unpublished/**"
+      ],
+      "ignore_patterns": [
+        "inventories/",
+        "inventory/",
+        "ansible/output/",
+        "ansible/outputs/",
+        "ansible/backups/",
+        "tmp/",
+        "scratch/",
+        "private/",
+        "notes/private/",
+        "unpublished/"
+      ]
+    },
+    {
+      "name": "packaging_outputs",
+      "description": "Generated release packages and packaging scratch output.",
+      "tracked": false,
+      "deterministic": false,
+      "public_safe_required": false,
+      "patterns": [
+        "dist/**",
+        "*.tar.gz",
+        "*.zip"
+      ],
+      "ignore_patterns": [
+        "dist/",
+        "*.tar.gz",
+        "*.zip"
+      ]
+    },
+    {
+      "name": "secret_material",
+      "description": "Secrets, credentials, private keys, PSKs, tokens, and local authentication material.",
+      "tracked": false,
+      "deterministic": false,
+      "public_safe_required": false,
+      "patterns": [
+        ".env",
+        ".env.*",
+        "secrets/**",
+        "tokens/**",
+        "credentials/**",
+        "*.secret",
+        "*.key",
+        "*.pem",
+        "*.p12",
+        "*.pfx",
+        "*.psk"
+      ],
+      "ignore_patterns": [
+        ".env",
+        ".env.*",
+        "secrets/",
+        "tokens/",
+        "credentials/",
+        "*.secret",
+        "*.key",
+        "*.pem",
+        "*.p12",
+        "*.pfx",
+        "*.psk"
+      ]
+    }
+  ]
+}

@@ -1,9 +1,48 @@
 .env
+.env.*
 *.secret
 *.key
 *.pem
+*.p12
+*.pfx
+*.psk
 *.bak
 *.swp
 __pycache__/
 .DS_Store
 dist/
+*.tar.gz
+*.zip
+
+# Runtime media workspaces. Keep .gitkeep placeholders tracked.
+media/raw/*
+!media/raw/.gitkeep
+media/edited/*
+!media/edited/.gitkeep
+media/audio/*
+!media/audio/.gitkeep
+media/thumbnails/*
+!media/thumbnails/.gitkeep
+media/screenshots/*
+!media/screenshots/.gitkeep
+
+# Screenshot drafts and staging areas.
+screenshots/work/
+screenshots/drafts/
+
+# Local lab inventories and Ansible runtime output.
+inventories/
+inventory/
+ansible/output/
+ansible/outputs/
+ansible/backups/
+
+# Local-only scratch, private notes, and unpublished content.
+tmp/
+scratch/
+private/
+notes/private/
+unpublished/
+secrets/
+tokens/
+credentials/
