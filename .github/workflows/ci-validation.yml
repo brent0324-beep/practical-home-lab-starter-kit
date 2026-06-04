@@ -1,0 +1,55 @@
+name: CI validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GITLEAKS_VERSION: 8.30.1
+
+jobs:
+  validate:
+    name: Repository validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validation tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pre-commit==3.6.2
+          mkdir -p "$HOME/.local/bin"
+          curl -fsSL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -o /tmp/gitleaks.tar.gz
+          tar -xzf /tmp/gitleaks.tar.gz -C "$HOME/.local/bin" gitleaks
+          chmod +x "$HOME/.local/bin/gitleaks"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Validate configuration presence
+        run: |
+          test -f .pre-commit-config.yaml
+          test -f .gitleaks.toml
+
+      - name: Run pre-commit
+        run: pre-commit run --all-files
+
+      - name: Run Gitleaks
+        run: gitleaks detect --source . --config .gitleaks.toml --redact --no-banner
+
+      - name: Run repository validation
+        run: |
+          ./scripts/validate.sh
+          ./scripts/redaction-check.sh
+          ./scripts/validate_repo_finalization.sh
