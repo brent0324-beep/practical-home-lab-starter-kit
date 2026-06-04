@@ -47,6 +47,21 @@ bash -n scripts/validate.sh scripts/redaction-check.sh scripts/package-release.s
 git diff --check
 ```
 
+## Pre-Commit Checks
+
+After repo-level `.pre-commit-config.yaml` and `.gitleaks.toml` are present,
+local source hygiene can be checked with:
+
+```bash
+pre-commit install
+pre-commit run --all-files
+```
+
+The Gitleaks hook requires `gitleaks` on `PATH` and must use redacted output.
+Pre-commit checks must not scan ignored draft media, screenshots, local
+inventories, private notes, packaging scratch files, or unpublished artifacts as
+source.
+
 ## Release Validation
 
 Before publication or release, also complete manual review using:

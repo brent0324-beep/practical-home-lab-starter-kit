@@ -1,0 +1,47 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: |
+          (?x)^(
+            reports/|
+            output/|
+            outputs/|
+            runtime/|
+            logs/|
+            cache/|
+            caches/
+          )
+      - id: end-of-file-fixer
+        exclude: |
+          (?x)^(
+            reports/|
+            output/|
+            outputs/|
+            runtime/|
+            logs/|
+            cache/|
+            caches/
+          )
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: detect-private-key
+        exclude: |
+          (?x)^(
+            \.gitleaks\.toml|
+            templates/gitleaks/\.gitleaks\.toml|
+            scripts/redaction-check\.sh
+          )$
+
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: gitleaks
+        entry: gitleaks detect --source . --config .gitleaks.toml --redact --no-banner
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit]
