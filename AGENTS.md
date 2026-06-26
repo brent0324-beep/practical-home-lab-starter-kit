@@ -5,11 +5,8 @@
 This repository is a public-facing educational starter kit for network
 engineers building sanitized home lab workflows.
 
-Work must stay scoped to:
-
-```text
-/opt/products/practical-home-lab-starter-kit
-```
+Work must stay scoped to this repository and the local working copy for this
+project.
 
 Do not modify other repositories, live infrastructure, system configuration,
 firewall rules, SSH settings, packages, services, Docker state, or host runtime
@@ -56,15 +53,12 @@ docs/release-checklist.md
 docs/repo-boundary-policy.md
 ```
 
-Shared workstation governance is referenced from:
+Maintainers may use local automation or repository-specific workflows, but
+public contributors only need the documented governance and validation commands
+in this repository.
 
-```text
-/opt/codex-standards/docs/global_governance_baseline.md
-/opt/codex-standards/docs/governance/
-```
-
-Project-specific public-repo redaction and sanitization rules are stricter than
-the shared baseline and must be preserved.
+Project-specific public-repo redaction and sanitization rules remain the
+authoritative standard for this repository and must be preserved.
 
 ## Runtime and Private Artifact Rules
 

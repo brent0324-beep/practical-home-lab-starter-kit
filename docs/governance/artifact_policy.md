@@ -49,7 +49,7 @@ The following must remain ignored unless explicitly sanitized and promoted:
 - raw, edited, audio, thumbnail, and screenshot media workspaces
 - personal notes
 - unpublished content
-- private infrastructure details
+- sensitive environment details
 
 ## Packaging Artifacts
 

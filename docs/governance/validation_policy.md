@@ -26,7 +26,7 @@ It is read-only and checks:
 - governance document presence
 - `config/artifact_policy.json` validity
 - runtime and private path ignore coverage
-- staged private infrastructure data posture
+- staged sensitive environment data posture
 - staged runtime artifact posture
 - staged unpublished media posture
 - staged generated packaging posture

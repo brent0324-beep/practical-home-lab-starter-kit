@@ -17,7 +17,7 @@ Apply guidance in this order:
 5. `docs/publication-checklist.md`
 6. `docs/release-checklist.md`
 7. `docs/governance/*.md`
-8. `/opt/codex-standards/docs/global_governance_baseline.md`
+8. documented repository-local maintainer workflows, when applicable
 9. task-specific user instructions
 
 If guidance conflicts, preserve the stricter public safety, redaction,
@@ -46,6 +46,6 @@ Use this order for future governance work:
 4. pre-commit and Gitleaks configuration
 5. CI workflow
 
-Automation must not inspect or publish local private notes, private
-infrastructure files, draft media, screenshot staging areas, or generated
+Automation must not inspect or publish local private notes, sensitive
+environment files, draft media, screenshot staging areas, or generated
 packaging artifacts.

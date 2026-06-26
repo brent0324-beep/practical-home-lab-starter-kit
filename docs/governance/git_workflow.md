@@ -3,7 +3,7 @@
 ## Baseline Rules
 
 - Inspect `git status --short` before edits.
-- Keep changes scoped to `/opt/products/practical-home-lab-starter-kit`.
+- Keep changes scoped to this repository and the local working copy.
 - Preserve existing public documentation, release assets, validation scripts,
   publication guidance, and redaction controls.
 - Do not commit unless explicitly instructed.
