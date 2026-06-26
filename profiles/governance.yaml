@@ -1,0 +1,94 @@
+profile_name: governance
+profile_version: 1
+repository_classes:
+  - public product repository
+  - open source educational repository
+
+model_defaults:
+  primary_model: GPT-5.5
+  primary_effort: High
+  primary_reason: Best fit for governance architecture, bundle tooling, prompt
+    rendering, and public-safety validation work.
+  fallback_model: GPT-5.3 Spark
+  fallback_effort: Medium
+  fallback_reason: Acceptable for bounded documentation, template, schema, and
+    validation maintenance.
+
+constraint_defaults:
+  - Do not push.
+  - Do not merge.
+  - Do not modify remotes.
+  - Do not use sudo.
+  - Do not create root-owned files.
+  - Preserve repository boundaries.
+  - Preserve the contributor-friendly public posture.
+
+validation_defaults:
+  - ./scripts/session
+  - ./scripts/validate.sh
+  - ./scripts/redaction-check.sh
+  - ./scripts/validate_repo_finalization.sh
+  - git diff --check
+
+loop_policy:
+  maximum_normal_implementation_iterations: 3
+  maximum_autonomous_refinement_iterations: 5
+  approval_required_at_or_above: 6
+  stop_on_governance_violation: true
+  loop_exhaustion_report_required: true
+
+lifecycle:
+  smcpp:
+    enabled: true
+    policy_reference: docs/governance/engineering_session_workflow.md
+    canonical_definition: SMCPP = governed feature completion into the
+      configured integration branch.
+    integration_branch: main
+    protected_branches:
+      - main
+    required_validation_mode: integration
+    pre_handoff_required: true
+    feature_completion_gate_required: true
+    standard_completion_scope:
+      - validation
+      - finalization checks
+      - commit if changes are present and ready
+      - feature push
+      - PR creation
+      - merge into main
+      - feature branch cleanup
+      - prune
+      - final reporting
+    explicit_exclusions:
+      - release creation
+      - force push
+      - validation bypass
+      - unrelated repository mutation
+      - credential mutation
+      - secret mutation
+      - environment mutation
+    approval_phrases:
+      smcpp: SMCPP
+      main_promotion: MAIN PROMOTION APPROVED
+      release: RELEASE APPROVED
+      force_push: FORCE PUSH APPROVED
+      lifecycle_exception: LIFECYCLE EXCEPTION APPROVED
+
+builder_scope_defaults:
+  - governance documentation
+  - bootstrap metadata
+  - prompt templates
+  - schemas
+  - validation integration
+
+explicit_non_goals_defaults:
+  - Do not redesign the starter kit.
+  - Do not change product functionality.
+  - Do not change release packaging.
+
+final_report_defaults:
+  - Branch
+  - Commit
+  - Files changed
+  - Validation summary
+  - Git status

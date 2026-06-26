@@ -1,0 +1,10 @@
+profile_name: public_repository_lite
+profile_version: 1
+summary: Lite design profile for contributor-friendly Governance v2 adoption.
+
+principles:
+  - Keep durable bootstrap context compact and public-safe.
+  - Keep live session context bounded and easy to refresh.
+  - Prefer repository-local wording over repository-private governance jargon.
+  - Preserve contributor clarity while improving maintainer re-entry speed.
+  - Keep generated engineering-session artifacts ignored and non-canonical.

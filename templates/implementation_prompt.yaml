@@ -1,0 +1,160 @@
+version: 1
+prompt_kind: codex_implementation
+profile: governance
+
+metadata:
+  canonical_format: yaml
+  generated_prompts_preferred: true
+  markdown_role: human-readable implementation prompt output for review and
+    execution guidance
+  yaml_role: canonical prompt specification, template, profile, and task input
+  json_role: schemas and validation only
+
+section_order:
+  - MODEL RECOMMENDATION
+  - Repository
+  - Current Known State
+  - Goal
+  - Non-negotiable Constraints
+  - Agentic Loop Scope
+  - SMCPP LIFECYCLE
+  - Builder Scope
+  - Explicit Non-goals
+  - Validation
+  - Release History
+  - Brent Usefulness Evaluator
+  - Final Report
+  - END OF CODEX PROMPT
+
+model_recommendation:
+  primary:
+    model: GPT-5.5
+    effort: High
+    reason: Best fit for governance architecture, bundle tooling, prompt
+      rendering, and public-safety validation work.
+  fallback:
+    model: GPT-5.3 Spark
+    effort: Medium
+    reason: Acceptable for bounded documentation, template, schema, and
+      validation maintenance.
+
+repository:
+  path: project root
+
+current_known_state:
+  - Summarize validated durable facts only.
+  - Reference bootstrap and session-state artifacts when they exist.
+
+goal:
+  summary: Describe the implementation outcome.
+
+non_negotiable_constraints:
+  - Do not push.
+  - Do not merge.
+  - Do not modify remotes.
+  - Do not use sudo.
+  - Do not create root-owned files.
+  - Preserve repository boundaries.
+
+agentic_loop_scope:
+  maximum_normal_implementation_iterations: 3
+  maximum_autonomous_refinement_iterations: 5
+  approval_required_at_or_above: 6
+  stop_conditions:
+    - Stop immediately on governance violation.
+  loop_exhaustion_report_required: true
+
+lifecycle:
+  smcpp:
+    enabled: true
+    policy_reference: docs/governance/engineering_session_workflow.md
+    canonical_definition: SMCPP = governed feature completion into the
+      configured integration branch.
+    integration_branch: main
+    protected_branches:
+      - main
+    required_validation_mode: integration
+    pre_handoff_required: true
+    feature_completion_gate_required: true
+    standard_completion_scope:
+      - validation
+      - finalization checks
+      - commit if required
+      - feature push
+      - PR creation
+      - merge into main
+      - feature branch cleanup
+      - prune
+      - final reporting
+    explicit_exclusions:
+      - release creation
+      - force push
+      - validation bypass
+      - unrelated repository mutation
+      - credential mutation
+      - secret mutation
+      - environment mutation
+    approval_phrases:
+      smcpp: SMCPP
+      main_promotion: MAIN PROMOTION APPROVED
+      release: RELEASE APPROVED
+      force_push: FORCE PUSH APPROVED
+      lifecycle_exception: LIFECYCLE EXCEPTION APPROVED
+    current_lifecycle_stage: Implementation
+    next_required_step: Validation
+
+builder_scope:
+  add:
+    - path/to/new/file
+  update:
+    - path/to/existing/file
+  notes:
+    - Keep the implementation scoped to Governance v2 Lite assets and
+      validation.
+
+explicit_non_goals:
+  - Do not redesign the starter kit.
+  - Do not change release packaging.
+  - Do not change tutorials or product functionality.
+
+validation:
+  required:
+    - ./scripts/session
+    - ./scripts/validate.sh
+    - ./scripts/redaction-check.sh
+    - ./scripts/validate_repo_finalization.sh
+    - git diff --check
+  optional:
+    - pre-commit run --all-files
+
+release_history:
+  required: false
+  location: CHANGELOG.md
+  guidance:
+    - Note governance workflow changes when they materially affect maintainer
+      behavior.
+
+brent_usefulness_evaluator:
+  required: true
+  criteria:
+    - governance consistency
+    - contributor clarity
+    - maintainer usability
+    - bootstrap quality
+    - engineering-session usefulness
+    - documentation quality
+    - context density
+    - validation clarity
+    - maintainability
+    - token/value efficiency
+
+final_report:
+  required_items:
+    - Branch
+    - Commit
+    - Files changed
+    - Validation summary
+    - Git status
+    - Remaining TODOs
+
+end_of_codex_prompt: END OF CODEX PROMPT

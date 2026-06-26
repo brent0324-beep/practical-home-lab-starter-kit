@@ -4,7 +4,7 @@
   "classes": [
     {
       "name": "public_documentation",
-      "description": "Sanitized public README, documentation, release, contribution, security, publication, product, blog, video, and media planning documents.",
+      "description": "Sanitized public README, documentation, release, contribution, security, bootstrap, publication, product, blog, video, and media planning documents.",
       "tracked": true,
       "deterministic": true,
       "public_safe_required": true,
@@ -15,17 +15,17 @@
         "LICENSE.md",
         "CONTRIBUTING.md",
         "SECURITY.md",
+        "AGENTS.md",
         "docs/**/*.md",
         "blog/**/*.md",
         "video/**/*.md",
         "media/**/*.md",
-        "product/**/*.md",
-        "AGENTS.md"
+        "product/**/*.md"
       ]
     },
     {
       "name": "sanitized_examples",
-      "description": "Public-safe templates, Ansible examples, scripts, and diagrams using placeholder values.",
+      "description": "Public-safe templates, Ansible examples, scripts, diagrams, and governance source assets using placeholder values.",
       "tracked": true,
       "deterministic": true,
       "public_safe_required": true,
@@ -35,7 +35,10 @@
         "ansible/playbooks/*.yml",
         "diagrams/**",
         "scripts/*.sh",
-        ".github/**"
+        "scripts/*.py",
+        ".github/**",
+        "profiles/**/*.yaml",
+        "schemas/**/*.json"
       ]
     },
     {
@@ -50,14 +53,38 @@
     },
     {
       "name": "configuration_and_governance",
-      "description": "Repository configuration, ignore policy, artifact policy, and governance metadata.",
+      "description": "Repository configuration, ignore policy, artifact policy, governance metadata, and tracked generated bootstrap output.",
       "tracked": true,
       "deterministic": true,
       "public_safe_required": true,
       "patterns": [
         ".gitignore",
+        ".gitleaks.toml",
+        ".pre-commit-config.yaml",
         "config/artifact_policy.json",
-        "docs/governance/**/*.md"
+        "config/repository_bootstrap.yml",
+        "docs/governance/**/*.md",
+        "docs/bootstrap/BOOTSTRAP.md",
+        "docs/bootstrap/SESSION_STATE.md"
+      ]
+    },
+    {
+      "name": "engineering_session_artifacts",
+      "description": "Generated repository context, session history, prompt smoke outputs, and migration bundles used for maintainer engineering-session re-entry.",
+      "tracked": false,
+      "deterministic": true,
+      "public_safe_required": true,
+      "patterns": [
+        "generated/repository_context.md",
+        "generated/session_history.md",
+        "generated/prompts/**",
+        "generated/migration_bundles/**"
+      ],
+      "ignore_patterns": [
+        "generated/repository_context.md",
+        "generated/session_history.md",
+        "generated/prompts/*",
+        "generated/migration_bundles/*"
       ]
     },
     {

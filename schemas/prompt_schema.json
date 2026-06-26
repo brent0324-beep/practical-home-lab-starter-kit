@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/practical-home-lab-starter-kit/schemas/prompt_schema.json",
+  "title": "Governance v2 Lite Codex Prompt Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "prompt_kind",
+    "profile",
+    "metadata",
+    "section_order",
+    "model_recommendation",
+    "repository",
+    "current_known_state",
+    "goal",
+    "non_negotiable_constraints",
+    "agentic_loop_scope",
+    "lifecycle",
+    "builder_scope",
+    "explicit_non_goals",
+    "validation",
+    "release_history",
+    "brent_usefulness_evaluator",
+    "final_report",
+    "end_of_codex_prompt"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "prompt_kind": {
+      "type": "string",
+      "const": "codex_implementation"
+    },
+    "profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "canonical_format",
+        "generated_prompts_preferred",
+        "markdown_role",
+        "yaml_role",
+        "json_role"
+      ]
+    },
+    "section_order": {
+      "type": "array",
+      "minItems": 14,
+      "items": {
+        "type": "string"
+      }
+    },
+    "model_recommendation": {
+      "type": "object",
+      "required": [
+        "primary",
+        "fallback"
+      ]
+    },
+    "repository": {
+      "type": "object",
+      "required": [
+        "path"
+      ]
+    },
+    "current_known_state": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "goal": {
+      "type": "object",
+      "required": [
+        "summary"
+      ]
+    },
+    "non_negotiable_constraints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "agentic_loop_scope": {
+      "type": "object",
+      "required": [
+        "maximum_normal_implementation_iterations",
+        "maximum_autonomous_refinement_iterations",
+        "approval_required_at_or_above",
+        "stop_conditions",
+        "loop_exhaustion_report_required"
+      ]
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": [
+        "smcpp"
+      ]
+    },
+    "builder_scope": {
+      "type": "object",
+      "required": [
+        "add",
+        "update",
+        "notes"
+      ]
+    },
+    "explicit_non_goals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "required",
+        "optional"
+      ]
+    },
+    "release_history": {
+      "type": "object",
+      "required": [
+        "required",
+        "location",
+        "guidance"
+      ]
+    },
+    "brent_usefulness_evaluator": {
+      "type": "object",
+      "required": [
+        "required",
+        "criteria"
+      ]
+    },
+    "final_report": {
+      "type": "object",
+      "required": [
+        "required_items"
+      ]
+    },
+    "end_of_codex_prompt": {
+      "type": "string",
+      "const": "END OF CODEX PROMPT"
+    }
+  }
+}

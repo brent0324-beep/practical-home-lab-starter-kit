@@ -13,6 +13,12 @@ __pycache__/
 dist/
 *.tar.gz
 *.zip
+generated/repository_context.md
+generated/session_history.md
+generated/prompts/*
+!generated/prompts/.gitkeep
+generated/migration_bundles/*
+!generated/migration_bundles/.gitkeep
 
 # Runtime media workspaces. Keep .gitkeep placeholders tracked.
 media/raw/*

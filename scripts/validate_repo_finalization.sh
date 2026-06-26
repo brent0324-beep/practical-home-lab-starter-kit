@@ -31,6 +31,12 @@ required_files=(
   "docs/governance/runtime_data_policy.md"
   "docs/governance/git_workflow.md"
   "docs/governance/validation_policy.md"
+  "docs/governance/engineering_session_workflow.md"
+  "docs/governance/codex_prompt_standard.md"
+  "docs/governance/codex_prompt_checklist.md"
+  "docs/bootstrap/BOOTSTRAP.md"
+  "docs/bootstrap/SESSION_STATE.md"
+  "config/repository_bootstrap.yml"
   "config/artifact_policy.json"
   "SECURITY.md"
   "CONTRIBUTING.md"
@@ -77,6 +83,10 @@ ignore_samples=(
   "notes/private/runtime-check.md"
   "unpublished/runtime-check.md"
   "dist/runtime-check.tar.gz"
+  "generated/repository_context.md"
+  "generated/session_history.md"
+  "generated/prompts/runtime-check.md"
+  "generated/migration_bundles/runtime-check.zip"
   ".env"
   "secrets/runtime-check.txt"
 )
@@ -136,9 +146,9 @@ staged_private_count="$(
 )"
 
 if (( staged_private_count > 0 )); then
-  fail "staged private infrastructure, secret, or local-only paths found: $staged_private_count"
+  fail "staged sensitive-environment, secret, or local-only paths found: $staged_private_count"
 else
-  pass "no staged private infrastructure, secret, or local-only paths"
+  pass "no staged sensitive-environment, secret, or local-only paths"
 fi
 
 staged_runtime_count="$(
@@ -194,6 +204,25 @@ if (( staged_package_count > 0 )); then
   fail "staged generated packaging artifacts found: $staged_package_count"
 else
   pass "no staged generated packaging artifacts"
+fi
+
+staged_engineering_session_count="$(
+  git diff --cached --name-only |
+    awk '
+      /^generated\/repository_context\.md$/ ||
+      /^generated\/session_history\.md$/ ||
+      /^generated\/prompts\// ||
+      /^generated\/migration_bundles\// {
+        count++
+      }
+      END { print count + 0 }
+    '
+)"
+
+if (( staged_engineering_session_count > 0 )); then
+  fail "staged generated engineering-session artifacts found: $staged_engineering_session_count"
+else
+  pass "no staged generated engineering-session artifacts"
 fi
 
 ownership_mismatch_count="$(

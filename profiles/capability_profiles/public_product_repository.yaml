@@ -1,0 +1,18 @@
+profile_name: public_product_repository
+profile_version: 1
+summary: Public repository posture for educational product maintenance.
+
+capabilities:
+  repository_read: allowed
+  repository_mutation: operator_approval_required
+  prompt_generation: allowed
+  analysis: allowed
+  report_generation: restricted
+  cloud_sync: prohibited
+  live_execution: prohibited
+  credential_storage: prohibited
+  network_mutation: prohibited
+
+notes:
+  - Public-safe documentation, examples, and validation are the primary focus.
+  - Generated engineering-session artifacts stay local and Git ignored.

@@ -1,0 +1,166 @@
+version: 2
+
+repository_identity:
+  name: Practical Home Lab Starter Kit
+  root: project root
+  default_branch: main
+  working_branch_rule: main is the public integration branch; scoped feature
+    branches are optional for maintainers
+
+repository_purpose:
+  summary: Public educational starter kit for sanitized Linux, GNS3, Ansible,
+    and documentation workflows in a home lab.
+  scope: Preserve a contributor-friendly, public-safe repository with practical
+    examples, governance, and validation guidance for maintainers and readers.
+
+repository_classification:
+  repo_class: public product repository
+  posture: open source, GitHub synchronized
+
+governance_model:
+  hierarchy:
+    - AGENTS.md
+    - SECURITY.md
+    - CONTRIBUTING.md
+    - docs/sanitized-example-policy.md
+    - docs/publication-checklist.md
+    - docs/release-checklist.md
+    - docs/governance/*.md
+    - task-specific user instructions
+  local_mode: public-repo lite
+  operator_approval: Push, merge, release, force push, destructive cleanup, and
+    credential or environment mutation require explicit operator approval.
+
+safety_boundaries:
+  - Keep the repository public-safe, beginner-friendly, and reference-focused.
+  - Do not modify live infrastructure, host configuration, services, Docker
+    state, packages, SSH, or firewall settings from this repository.
+  - Do not change product behavior, release packaging, or unrelated educational
+    content as part of governance adoption.
+  - Do not weaken validation, redaction, no-force-push, or repository-boundary
+    controls.
+
+privacy_boundaries:
+  - Do not place secrets, tokens, credentials, keys, inventories, backups,
+    unpublished media, or local-only notes in bootstrap or session artifacts.
+  - Keep generated engineering-session artifacts local, Git ignored, and free
+    of sensitive environment details.
+  - Use placeholders, private lab ranges, and generic hostnames in public
+    examples.
+
+architecture_summary:
+  - Public docs, sanitized templates, and example scripts remain the primary
+    product surface.
+  - Governance v2 Lite adds repository-local bootstrap, session, prompt, and
+    bundle tooling for maintainers without changing product functionality.
+  - Generated engineering-session artifacts live under generated/ and remain
+    non-canonical.
+
+important_directories:
+  - path: docs/bootstrap/
+    purpose: generated public bootstrap and live session-state context
+  - path: docs/governance/
+    purpose: public governance references, prompt standard, and engineering
+      session workflow documentation
+  - path: scripts/
+    purpose: validation, bundle generation, prompt rendering, and session
+      wrappers
+  - path: templates/
+    purpose: bootstrap, repository-context, session-history, and prompt source
+      templates
+  - path: profiles/
+    purpose: lite prompt defaults and repository design profiles for engineering
+      sessions
+  - path: schemas/
+    purpose: prompt specification schema references
+  - path: generated/
+    purpose: ignored repository context, session history, prompt smoke output,
+      and migration bundles
+
+validation_commands:
+  - label: Engineering session
+    command: ./scripts/session
+  - label: Required
+    command: ./scripts/validate.sh
+  - label: Redaction
+    command: ./scripts/redaction-check.sh
+  - label: Repository finalization
+    command: ./scripts/validate_repo_finalization.sh
+  - label: Prompt standard
+    command: python3 scripts/validate_prompt_standard.py
+  - label: Diff hygiene
+    command: git diff --check
+
+smcpp_status:
+  mode: Governance v2 Lite
+  readiness_profile: ./scripts/validate.sh, ./scripts/redaction-check.sh,
+    ./scripts/validate_repo_finalization.sh, and git diff --check
+  notes:
+    - SMCPP means governed feature completion into the configured integration
+      branch.
+    - When explicitly authorized, SMCPP may perform validation, finalization
+      checks, commit if required, feature push, PR creation, merge into main,
+      feature branch cleanup, prune, and final reporting.
+    - SMCPP does not authorize release creation, force push, validation bypass,
+      unrelated repository mutation, credential mutation, secret mutation, or
+      environment mutation.
+
+major_capabilities:
+  - Public-safe starter kit documentation for Linux, GNS3, Ansible, remote
+    access, and validation habits.
+  - Sanitized templates and example scripts for lab workflows.
+  - Governance v2 Lite engineering-session initialization with bootstrap
+    rendering, repository context, session history, prompt rendering, and
+    migration bundle generation.
+  - Public-safety validation, redaction checks, and repository finalization
+    guardrails.
+
+major_decisions:
+  - Preserve docs/bootstrap/BOOTSTRAP.md as the public bootstrap entrypoint.
+  - Keep live or changing context in docs/bootstrap/SESSION_STATE.md.
+  - Keep generated engineering-session artifacts ignored and out of tracked
+    source history.
+  - Use repository-local wording so public contributors can understand the
+    workflow without repository-private governance context.
+
+current_constraints:
+  - Governance adoption must not change product functionality or release
+    packaging.
+  - Contributor documentation should stay concise and public-oriented.
+  - Generated session artifacts must remain deterministic, local, and Git
+    ignored.
+  - Validation must remain safe, local, and readable for maintainers.
+
+known_technical_debt:
+  - Session state is still maintainer-authored and may drift if not refreshed.
+  - Prompt and bundle tooling are intentionally lighter than larger
+    governance repositories.
+  - Bootstrap rendering depends on local Python with YAML support.
+
+outstanding_governance_work:
+  - Refresh docs/bootstrap/SESSION_STATE.md at session start and before major
+    handoff.
+  - Keep lite prompt, bundle, and bootstrap assets aligned with future shared
+    standards updates.
+  - Expand tests only where they materially improve maintainability for this
+    public repository.
+
+warnings_inconsistencies:
+  - docs/bootstrap/BOOTSTRAP.md is generated and should not be hand-edited
+    during normal workflow.
+  - Generated prompts and migration bundles are maintainer artifacts, not
+    canonical tracked source.
+
+live_session_state:
+  path: docs/bootstrap/SESSION_STATE.md
+  guidance:
+    - Keep live or changing context out of config/repository_bootstrap.yml.
+    - Review or refresh session state at session start, after validation
+      changes, and before major handoff.
+    - Use Git and validation commands for current state instead of stale notes.
+
+central_standard_references:
+  - Shared Governance v2 bootstrap context standard
+  - Shared Governance v2 session-state standard
+  - Shared Governance v2 prompt lifecycle integration standard
+  - Shared Governance v2 migration bundle guidance

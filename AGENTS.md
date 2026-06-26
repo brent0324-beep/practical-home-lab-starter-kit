@@ -57,6 +57,11 @@ Maintainers may use local automation or repository-specific workflows, but
 public contributors only need the documented governance and validation commands
 in this repository.
 
+At session start, maintainers should review `docs/bootstrap/BOOTSTRAP.md` and
+`docs/bootstrap/SESSION_STATE.md` before broad repository work. Use them as
+compact context, not as a substitute for `AGENTS.md`, public governance
+documents, validation scripts, or task-specific instructions.
+
 Project-specific public-repo redaction and sanitization rules remain the
 authoritative standard for this repository and must be preserved.
 
@@ -87,6 +92,7 @@ artifact contents.
 Default validation before commit handoff:
 
 ```bash
+./scripts/session
 ./scripts/validate.sh
 ./scripts/redaction-check.sh
 ./scripts/validate_repo_finalization.sh

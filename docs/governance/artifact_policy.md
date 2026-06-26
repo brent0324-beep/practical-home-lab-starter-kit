@@ -23,8 +23,10 @@ Tracked public source artifacts include:
 - reviewed public assets under `assets/`
 - blog, video, media, and product planning documents
 - validation and example scripts
+- prompt templates, profiles, and schemas for maintainer engineering sessions
 - GitHub issue and pull request templates
 - governance documentation
+- tracked bootstrap metadata and generated public bootstrap output
 
 These artifacts must remain sanitized and public-safe.
 
@@ -44,6 +46,10 @@ The following must remain ignored unless explicitly sanitized and promoted:
 - local inventory exports
 - local Ansible output
 - generated backups
+- generated repository context
+- generated session history
+- generated prompt smoke outputs
+- generated migration bundle archives
 - packaging scratch files
 - build output under `dist/`
 - raw, edited, audio, thumbnail, and screenshot media workspaces
@@ -55,6 +61,10 @@ The following must remain ignored unless explicitly sanitized and promoted:
 
 Release packages are generated artifacts. The packaging workflow may write under
 `dist/`, but generated archives and scratch files remain ignored.
+
+Engineering-session artifacts under `generated/` are also generated artifacts.
+They are useful for maintainer re-entry, but they are not canonical public
+source and must remain ignored.
 
 Before publication, inspect release package contents through the documented
 release process and run redaction checks.

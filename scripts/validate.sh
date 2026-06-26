@@ -48,6 +48,11 @@ required_files=(
   "docs/obs-recording-setup.md"
   "docs/video-production-checklist.md"
   "docs/terminal-presentation-guidelines.md"
+  "docs/bootstrap/BOOTSTRAP.md"
+  "docs/bootstrap/SESSION_STATE.md"
+  "docs/governance/engineering_session_workflow.md"
+  "docs/governance/codex_prompt_standard.md"
+  "docs/governance/codex_prompt_checklist.md"
   "diagrams/README.md"
   "diagrams/rendering-notes.md"
   "diagrams/golden-path-workflow.mmd"
@@ -103,11 +108,31 @@ required_files=(
   "product/gumroad-listing-draft.md"
   "product/launch-sequence-tonight.md"
   "product/golden-path-content-plan.md"
+  "config/repository_bootstrap.yml"
   "scripts/package-release.sh"
   "scripts/bootstrap-lab-host.example.sh"
   "scripts/setup-ufw-baseline.example.sh"
   "scripts/validate-lab-host.example.sh"
   "scripts/run-golden-path-demo.example.sh"
+  "scripts/session"
+  "scripts/render_repository_bootstrap.py"
+  "scripts/build_repository_context.py"
+  "scripts/build_session_history.py"
+  "scripts/render_codex_prompt.py"
+  "scripts/build_migration_bundle.py"
+  "scripts/validate_prompt_standard.py"
+  "templates/repository_bootstrap_template.md"
+  "templates/repository_context_template.md"
+  "templates/session_history_template.md"
+  "templates/implementation_prompt.yaml"
+  "templates/task_prompt_spec.example.yaml"
+  "profiles/governance.yaml"
+  "profiles/capability_profiles/public_product_repository.yaml"
+  "profiles/design_profiles/public_repository_lite.yaml"
+  "schemas/prompt_schema.json"
+  "generated/prompts/.gitkeep"
+  "generated/migration_bundles/.gitkeep"
+  "tests/test_engineering_session.py"
 )
 
 fail=0
@@ -214,6 +239,13 @@ required_terms=(
   "docs/video-production-checklist.md:Sanitization Checks"
   "docs/terminal-presentation-guidelines.md:Terminal Presentation Guidelines"
   "docs/terminal-presentation-guidelines.md:Prompt Cleanliness"
+  "docs/bootstrap/BOOTSTRAP.md:Generated file. Source of truth:"
+  "docs/bootstrap/BOOTSTRAP.md:SMCPP Status"
+  "docs/bootstrap/SESSION_STATE.md:Session goal"
+  "docs/governance/engineering_session_workflow.md:Governance v2 Lite"
+  "docs/governance/codex_prompt_standard.md:Generated prompts are preferred over manually repeated boilerplate."
+  "docs/governance/codex_prompt_standard.md:SMCPP = governed feature completion into the configured integration branch."
+  "docs/governance/codex_prompt_checklist.md:END OF CODEX PROMPT"
   "diagrams/README.md:Diagram Strategy"
   "diagrams/rendering-notes.md:Diagram Rendering Notes"
   "diagrams/golden-path-workflow.mmd:flowchart"
@@ -240,6 +272,7 @@ required_terms=(
   "product/gumroad-listing-draft.md:Gumroad Listing Draft"
   "product/launch-sequence-tonight.md:Launch Sequence Tonight"
   "product/golden-path-content-plan.md:Golden Path Content Plan"
+  "config/repository_bootstrap.yml:Governance v2 Lite"
   "scripts/package-release.sh:tar"
   "scripts/bootstrap-lab-host.example.sh:DRY RUN"
   "scripts/setup-ufw-baseline.example.sh:APPLY=1"
@@ -247,6 +280,18 @@ required_terms=(
   "scripts/run-golden-path-demo.example.sh:tree -L 2"
   "scripts/run-golden-path-demo.example.sh:ansible/inventory.example.ini"
   "scripts/run-golden-path-demo.example.sh:git diff --check"
+  "scripts/session:ENGINEERING SESSION READY"
+  "scripts/render_repository_bootstrap.py:config/repository_bootstrap.yml"
+  "scripts/build_repository_context.py:generated/repository_context.md"
+  "scripts/build_session_history.py:generated/session_history.md"
+  "scripts/render_codex_prompt.py:SMCPP LIFECYCLE"
+  "scripts/build_migration_bundle.py:BUNDLE_SNAPSHOT.md"
+  "scripts/validate_prompt_standard.py:prompt-standard: PASS"
+  "templates/implementation_prompt.yaml:configured integration branch."
+  "templates/implementation_prompt.yaml:END OF CODEX PROMPT"
+  "profiles/governance.yaml:profile_name: governance"
+  "schemas/prompt_schema.json:Governance v2 Lite Codex Prompt Schema"
+  "tests/test_engineering_session.py:test_prompt_renderer_includes_smcpp_lifecycle"
   "video/README.md:Video Planning"
   "video/walkthrough-outline.md:Scene 1"
   "video/walkthrough-outline.md:Golden Path"
@@ -317,6 +362,36 @@ while IFS= read -r script; do
     fail=1
   fi
 done < <(find scripts -type f -name "*.sh" | sort)
+
+python_files=(
+  "scripts/render_repository_bootstrap.py"
+  "scripts/build_repository_context.py"
+  "scripts/build_session_history.py"
+  "scripts/render_codex_prompt.py"
+  "scripts/build_migration_bundle.py"
+  "scripts/validate_prompt_standard.py"
+  "tests/test_engineering_session.py"
+)
+
+if ! python3 -m py_compile "${python_files[@]}"; then
+  echo "Python syntax check failed."
+  fail=1
+fi
+
+if ! python3 scripts/render_repository_bootstrap.py --check; then
+  echo "Bootstrap render check failed."
+  fail=1
+fi
+
+if ! python3 scripts/validate_prompt_standard.py; then
+  echo "Prompt standard validation failed."
+  fail=1
+fi
+
+if ! python3 -m unittest tests.test_engineering_session; then
+  echo "Engineering session tests failed."
+  fail=1
+fi
 
 if [[ "$fail" -ne 0 ]]; then
   echo "Validation failed."

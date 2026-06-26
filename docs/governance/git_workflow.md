@@ -24,11 +24,12 @@ Do not stage:
 - draft screenshots or screenshot workspaces
 - raw or edited media
 - generated packaging output
+- generated engineering-session artifacts under `generated/`
 - personal notes
 - unpublished content
 
 Only stage public-safe source, sanitized examples, reviewed public assets,
-governance docs, and validation scripts.
+governance docs, tracked bootstrap artifacts, and validation scripts.
 
 ## Before Commit Handoff
 

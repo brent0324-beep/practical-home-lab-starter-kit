@@ -35,6 +35,12 @@ repository-boundary, secret-handling, ownership, and no-force-push rule.
 - `git_workflow.md`: commit, staging, release, and no-force-push rules.
 - `validation_policy.md`: validation, redaction, finalization, and release
   review expectations.
+- `engineering_session_workflow.md`: Governance v2 Lite maintainer workflow for
+  bootstrap context, repository context, prompt rendering, and migration
+  bundles.
+- `codex_prompt_standard.md`: local prompt-rendering contract for engineering
+  sessions.
+- `codex_prompt_checklist.md`: prompt asset verification checklist.
 
 ## Normalization Order
 
@@ -44,8 +50,10 @@ Use this order for future governance work:
 2. `.gitignore` coverage
 3. validation and redaction checks
 4. pre-commit and Gitleaks configuration
-5. CI workflow
+5. engineering-session tooling
+6. CI workflow
 
 Automation must not inspect or publish local private notes, sensitive
-environment files, draft media, screenshot staging areas, or generated
-packaging artifacts.
+environment files, draft media, screenshot staging areas, generated packaging
+artifacts, or generated engineering-session artifacts outside the documented
+maintainer workflow.

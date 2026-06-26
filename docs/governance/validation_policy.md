@@ -5,13 +5,17 @@
 Preserve the existing validation entrypoints:
 
 ```bash
+./scripts/session
 ./scripts/validate.sh
 ./scripts/redaction-check.sh
 ```
 
 `scripts/validate.sh` verifies required public files and expected public
 content. `scripts/redaction-check.sh` performs high-signal redaction checks for
-secret-like patterns.
+secret-like patterns. `scripts/session` is the maintainer-facing Governance v2
+Lite engineering-session entrypoint that renders bootstrap context, generates
+repository/session artifacts, verifies prompt rendering, and checks the
+migration bundle.
 
 ## Finalization Validation
 
@@ -30,6 +34,7 @@ It is read-only and checks:
 - staged runtime artifact posture
 - staged unpublished media posture
 - staged generated packaging posture
+- ignore coverage for generated engineering-session artifacts
 - ownership
 
 It must not read private notes, local inventories, draft screenshots, generated
@@ -40,6 +45,7 @@ packages, or unpublished media contents.
 Run:
 
 ```bash
+./scripts/session
 ./scripts/validate.sh
 ./scripts/redaction-check.sh
 ./scripts/validate_repo_finalization.sh

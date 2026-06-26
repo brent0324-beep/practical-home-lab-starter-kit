@@ -1,0 +1,44 @@
+repository:
+  path: project root
+
+current_known_state:
+  - The repository is public, educational, and GitHub synchronized.
+  - Governance v2 Lite engineering-session assets exist locally.
+  - Generated engineering-session artifacts remain Git ignored.
+
+goal:
+  summary: Verify the lite engineering-session workflow and render a public-safe
+    Codex implementation prompt.
+
+lifecycle:
+  smcpp:
+    current_lifecycle_stage: Validation
+    next_required_step: Await operator approval before any lifecycle mutation
+
+builder_scope:
+  add:
+    - generated/prompts/governance_smoke.md
+  update:
+    - docs/bootstrap/BOOTSTRAP.md
+    - generated/repository_context.md
+    - generated/session_history.md
+  notes:
+    - Keep the rendered prompt public-safe and contributor-friendly.
+
+validation:
+  required:
+    - ./scripts/session
+    - ./scripts/validate.sh
+    - ./scripts/redaction-check.sh
+    - ./scripts/validate_repo_finalization.sh
+    - git diff --check
+  optional:
+    - pre-commit run --all-files
+
+final_report:
+  required_items:
+    - Branch
+    - Commit
+    - Git status
+    - Prompt renderer verification
+    - Bundle verification

@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd -P)"
+PYTHON_BIN=""
+BUNDLE_PATH="$REPO_ROOT/generated/migration_bundles/bootstrap_chat_session_v2.zip"
+REPOSITORY_CONTEXT_PATH="$REPO_ROOT/generated/repository_context.md"
+SESSION_HISTORY_PATH="$REPO_ROOT/generated/session_history.md"
+PROMPT_OUTPUT_PATH="$REPO_ROOT/generated/prompts/governance_smoke.md"
+
+for candidate in "$REPO_ROOT/.venv/bin/python" "$REPO_ROOT/venv/bin/python" "/usr/bin/python3" "python3"; do
+  if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -c "import yaml" >/dev/null 2>&1; then
+    PYTHON_BIN="$candidate"
+    break
+  fi
+done
+
+if [[ -z "$PYTHON_BIN" ]]; then
+  printf 'FAIL session: no Python interpreter with PyYAML support was found\n' >&2
+  exit 1
+fi
+
+printf 'bootstrap: rendering %s\n' "docs/bootstrap/BOOTSTRAP.md"
+"$PYTHON_BIN" "$REPO_ROOT/scripts/render_repository_bootstrap.py" --check >/dev/null 2>&1 || \
+  "$PYTHON_BIN" "$REPO_ROOT/scripts/render_repository_bootstrap.py"
+
+printf 'repository-context: generating %s\n' "generated/repository_context.md"
+"$PYTHON_BIN" "$REPO_ROOT/scripts/build_repository_context.py" \
+  --output "$REPOSITORY_CONTEXT_PATH"
+
+printf 'session-history: generating %s\n' "generated/session_history.md"
+"$PYTHON_BIN" "$REPO_ROOT/scripts/build_session_history.py" \
+  --output "$SESSION_HISTORY_PATH"
+
+printf 'prompt-smoke: rendering %s\n' "generated/prompts/governance_smoke.md"
+"$PYTHON_BIN" "$REPO_ROOT/scripts/render_codex_prompt.py" \
+  --template "$REPO_ROOT/templates/implementation_prompt.yaml" \
+  --profile "$REPO_ROOT/profiles/governance.yaml" \
+  --task "$REPO_ROOT/templates/task_prompt_spec.example.yaml" \
+  --repository-context "generated/repository_context.md" \
+  --output "$PROMPT_OUTPUT_PATH"
+
+printf 'prompt-standard: validating local prompt assets\n'
+"$PYTHON_BIN" "$REPO_ROOT/scripts/validate_prompt_standard.py"
+
+printf 'migration-bundle: generating %s\n' "generated/migration_bundles/bootstrap_chat_session_v2.zip"
+"$PYTHON_BIN" "$REPO_ROOT/scripts/build_migration_bundle.py" \
+  --output "$BUNDLE_PATH"
+
+printf 'migration-bundle: verifying %s\n' "generated/migration_bundles/bootstrap_chat_session_v2.zip"
+"$PYTHON_BIN" "$REPO_ROOT/scripts/build_migration_bundle.py" \
+  --output "$BUNDLE_PATH" \
+  --check
+
+export HOME_LAB_BUNDLE_PATH="$BUNDLE_PATH"
+"$PYTHON_BIN" - <<'PY'
+import os
+import zipfile
+from pathlib import Path
+
+bundle = Path(os.environ["HOME_LAB_BUNDLE_PATH"])
+required = {
+    "START_HERE.md",
+    "BUNDLE_SNAPSHOT.md",
+    "manifest.yaml",
+    "docs/bootstrap/BOOTSTRAP.md",
+    "docs/bootstrap/SESSION_STATE.md",
+    "generated/repository_context.md",
+    "generated/session_history.md",
+}
+with zipfile.ZipFile(bundle) as archive:
+    names = set(archive.namelist())
+missing = sorted(required - names)
+if missing:
+    raise SystemExit(f"FAIL session: bundle is missing required entries: {', '.join(missing)}")
+print("bundle-verify: PASS")
+PY
+
+grep -Fq "## SMCPP LIFECYCLE" "$PROMPT_OUTPUT_PATH" || {
+  printf 'FAIL session: rendered prompt missing SMCPP lifecycle section\n' >&2
+  exit 1
+}
+
+git -C "$REPO_ROOT" check-ignore -q "generated/repository_context.md" || {
+  printf 'FAIL session: repository context output is not ignored by Git\n' >&2
+  exit 1
+}
+
+git -C "$REPO_ROOT" check-ignore -q "generated/session_history.md" || {
+  printf 'FAIL session: session history output is not ignored by Git\n' >&2
+  exit 1
+}
+
+git -C "$REPO_ROOT" check-ignore -q "generated/prompts/governance_smoke.md" || {
+  printf 'FAIL session: prompt output is not ignored by Git\n' >&2
+  exit 1
+}
+
+git -C "$REPO_ROOT" check-ignore -q "generated/migration_bundles/bootstrap_chat_session_v2.zip" || {
+  printf 'FAIL session: bundle output is not ignored by Git\n' >&2
+  exit 1
+}
+
+branch="$(git -C "$REPO_ROOT" branch --show-current)"
+working_tree="clean"
+if [[ -n "$(git -C "$REPO_ROOT" status --short)" ]]; then
+  working_tree="dirty"
+fi
+
+printf '\nENGINEERING SESSION READY\n\n'
+printf 'Repository: %s\n' "$REPO_ROOT"
+printf 'Branch: %s\n' "$branch"
+printf 'Working Tree: %s\n' "$working_tree"
+printf 'Bootstrap: %s\n' "docs/bootstrap/BOOTSTRAP.md"
+printf 'Repository Context: %s\n' "generated/repository_context.md"
+printf 'Session History: %s\n' "generated/session_history.md"
+printf 'Prompt Smoke Output: %s\n' "generated/prompts/governance_smoke.md"
+printf 'Bundle: %s\n' "generated/migration_bundles/bootstrap_chat_session_v2.zip"
+printf 'Bundle Check: PASS\n'
+printf 'Git Ignored: yes (repository context, session history, prompt, bundle)\n'
+printf 'Ready For:\n'
+printf -- '- Maintainer re-entry\n'
+printf -- '- Prompt rendering review\n\n'
+printf 'Next Action: initialize the next governed engineering session from BUNDLE_SNAPSHOT.md, manifest.yaml, docs/bootstrap/BOOTSTRAP.md, docs/bootstrap/SESSION_STATE.md, generated/repository_context.md, and generated/session_history.md\n'
