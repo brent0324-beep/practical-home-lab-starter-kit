@@ -1,0 +1,130 @@
+version: 1
+artifact_kind: governance_fleet_repository_metadata
+repository:
+  name: practical-home-lab-starter-kit
+  path: /opt/products/practical-home-lab-starter-kit
+  git_branch: main
+fleet:
+  managed: true
+  class: PUBLIC
+  synchronization: manual
+  drift_detection: enabled
+  sync_eligible: false
+  mutation_allowed: false
+  reporting_tier: Tier 2
+classification:
+  type: PUBLIC
+  lifecycle: Governance v2 Lite
+  repo_class: public product repository
+source:
+  canonical_repository: /opt/codex-standards
+  canonical_commit: dd708fbe13ec46cd0ac606f627be1e602d43582a
+  adopted_on: '2026-06-27'
+  metadata_revision: 1
+governance:
+  version: Governance v2
+  canonical_commit: dd708fbe13ec46cd0ac606f627be1e602d43582a
+  engineering_session: true
+  smcpp_revision: dd708fbe13ec46cd0ac606f627be1e602d43582a
+lifecycle:
+  integration_branch: main
+  feature_branch_pattern: feature/*
+  remote_completion: true
+  main_promotion_allowed_by_smcpp: false
+  release_allowed_by_smcpp: false
+safety:
+  local_only: false
+  public_repo: true
+  secrets_allowed: false
+  external_api_allowed: false
+  production_mutation_allowed: false
+  destructive_operations_allowed: false
+smcpp:
+  enabled: false
+  version: 1
+  trigger_phrases:
+  - SMCPP
+  - Proceed with SMCPP
+  - Complete lifecycle
+  - Finish lifecycle
+  executor:
+    script: null
+    required: false
+    fail_closed_if_missing: true
+  lifecycle_type: remote_feature_completion
+  approvals:
+    operator_required: true
+    separate_main_promotion_required: true
+    separate_release_required: true
+    separate_force_push_required: true
+    separate_lifecycle_exception_required: true
+  completion:
+    validation: true
+    finalization: true
+    commit_if_needed: true
+    push: true
+    create_pr: true
+    merge: true
+    delete_remote_branch: true
+    delete_local_branch: true
+    prune: true
+    final_report: true
+  exclusions:
+    main_promotion: true
+    release_creation: true
+    force_push: true
+    validation_bypass: true
+    protected_branch_exception_outside_configured_lifecycle: true
+    destructive_cleanup_outside_completed_feature_branch: true
+    unrelated_repository_mutation: true
+    credential_secret_environment_mutation: true
+  quick_complete:
+    enabled: false
+    trigger_phrases:
+    - SMCPP QUICK COMPLETE
+    - implement and SMCPP
+    - complete lifecycle after validation
+    allowed_when:
+      trivial_scope: true
+      validation_passes: true
+      working_tree_clean_after_commit: true
+      no_secrets_changed: true
+      no_generated_artifacts_tracked: true
+      no_protected_branch_exception: true
+      no_release: true
+      no_main_promotion: true
+      no_force_push: true
+    max_files_changed: 10
+    max_lines_changed: 300
+    requires_final_summary: true
+    revert_guidance_required: true
+bootstrap:
+  present: true
+  bundle_version: v2
+validation:
+  last_validation: null
+  validation_script: ./scripts/validate.sh
+  primary_command: ./scripts/validate.sh
+  metadata_validation_command: null
+  finalization_command: null
+  session_command: ./scripts/session
+  last_validated: null
+capabilities:
+  declared:
+  - engineering_session
+  - repository_context
+  - migration_bundle
+  - prompt_renderer
+  - governance_bundle
+  - bootstrap
+  - validation
+  - governance_lite
+  - fleet_metadata
+status:
+  drift: none
+  warnings: []
+central_standard_references:
+- /opt/codex-standards/docs/governance/governance_fleet_management_mvp.md
+- /opt/codex-standards/docs/governance/governance_fleet_batch_metadata_adoption.md
+- /opt/codex-standards/config/governance_fleet_management.yaml
+- /opt/codex-standards/docs/smcpp-lifecycle-policy.md
