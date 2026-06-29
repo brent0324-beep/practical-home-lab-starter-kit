@@ -26,6 +26,11 @@ governance:
   canonical_commit: dd708fbe13ec46cd0ac606f627be1e602d43582a
   engineering_session: true
   smcpp_revision: dd708fbe13ec46cd0ac606f627be1e602d43582a
+design:
+  profile: educational_public_product
+  maturity: mvp
+  north_star_revision: 1
+  governance_standard: /opt/codex-standards/docs/governance/north_star_design_governance_standard.md
 lifecycle:
   integration_branch: main
   feature_branch_pattern: feature/*
