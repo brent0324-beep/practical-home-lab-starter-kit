@@ -3,6 +3,7 @@ from __future__ import annotations
 from copy import deepcopy
 from json import JSONDecodeError
 from jsonschema import Draft202012Validator
+from ipaddress import ip_address, ip_interface, ip_network
 from pathlib import Path
 from typing import Any, Dict, Mapping
 import json
@@ -133,6 +134,33 @@ def _ensure_safe_relative_path(path: str, field_name: str) -> str:
     return path
 
 
+def _resolve_lab_path(path: str, lab_dir: Path) -> str:
+    return str((lab_dir / path).resolve())
+
+
+def _split_host_and_prefix(value: str, field_name: str) -> str:
+    try:
+        return str(ip_interface(value).ip)
+    except ValueError as err:
+        raise LabctlValidationError(f"{field_name} must be a valid IPv4 host address") from err
+
+
+def _management_subnet(spec: Mapping[str, Any]) -> str | None:
+    subnet = spec.get("mgmt_ipv4_subnet")
+    if subnet is None:
+        variables = spec.get("variables", {})
+        if isinstance(variables, dict):
+            subnet = variables.get("mgmt_subnet")
+    if subnet is None:
+        return None
+    if not isinstance(subnet, str):
+        raise LabctlValidationError("mgmt_ipv4_subnet must be a string")
+    try:
+        return str(ip_network(subnet, strict=True))
+    except ValueError as err:
+        raise LabctlValidationError(f"mgmt_ipv4_subnet must be a valid IPv4 subnet: {subnet}") from err
+
+
 def _validate_path_references(spec: Mapping[str, Any]) -> None:
     nodes = spec.get("nodes", {})
     if not isinstance(nodes, dict):
@@ -188,6 +216,32 @@ def _validate_path_references(spec: Mapping[str, Any]) -> None:
                 )
 
 
+def _validate_management_addresses(spec: Mapping[str, Any]) -> None:
+    subnet = _management_subnet(spec)
+    if subnet is None:
+        return
+
+    network = ip_network(subnet, strict=True)
+    nodes = spec.get("nodes", {})
+    if not isinstance(nodes, dict):
+        raise LabctlValidationError("nodes must be a mapping")
+
+    for node_name, node_spec in nodes.items():
+        if not isinstance(node_spec, dict):
+            continue
+        node_address = node_spec.get("mgmt_ipv4")
+        if node_address is None:
+            continue
+        if not isinstance(node_address, str):
+            raise LabctlValidationError(f"mgmt_ipv4 for '{node_name}' must be a string")
+        host_address = _split_host_and_prefix(node_address, f"mgmt_ipv4 for '{node_name}'")
+        if ip_address(host_address) not in network:
+            raise LabctlValidationError(
+                f"mgmt_ipv4 for '{node_name}' ({host_address}) is outside mgmt subnet {subnet}"
+            )
+        node_spec["mgmt_ipv4"] = host_address
+
+
 def _merge_variables(
     spec: Mapping[str, Any], profile: Mapping[str, Any] | None
 ) -> Dict[str, Any]:
@@ -202,7 +256,7 @@ def _merge_variables(
     return _apply_template(merged, merged_vars)
 
 
-def _normalize_topology(spec: Mapping[str, Any]) -> Dict[str, Any]:
+def _normalize_topology(spec: Mapping[str, Any], lab_dir: Path) -> Dict[str, Any]:
     topology_nodes: Dict[str, Dict[str, Any]] = {}
     for node_name, node_spec in spec["nodes"].items():
         node_config: Dict[str, Any] = {}
@@ -210,14 +264,20 @@ def _normalize_topology(spec: Mapping[str, Any]) -> Dict[str, Any]:
             if value is None:
                 continue
             if key == "startup_config":
-                node_config["startup-config"] = value
+                node_config["startup-config"] = _resolve_lab_path(value, lab_dir)
             elif key == "mgmt_ipv4":
                 node_config["mgmt-ipv4"] = value
+            elif key == "binds":
+                rendered_binds = []
+                for bind in value:
+                    source, target = bind.split(":", 1)
+                    rendered_binds.append(f"{_resolve_lab_path(source, lab_dir)}:{target}")
+                node_config[key] = rendered_binds
             else:
                 node_config[key] = value
         topology_nodes[node_name] = node_config
 
-    return {
+    topology: Dict[str, Any] = {
         "name": spec["name"],
         "topology": {
             "defaults": {
@@ -230,17 +290,23 @@ def _normalize_topology(spec: Mapping[str, Any]) -> Dict[str, Any]:
             "links": list(spec["links"]),
         },
     }
+    subnet = _management_subnet(spec)
+    if subnet is not None:
+        topology["mgmt"] = {"ipv4-subnet": subnet}
+    return topology
 
 
 def render_lab_topology(
     spec_path: Path | str,
     profile_path: Path | str | None = None,
 ) -> Dict[str, Any]:
+    spec_path = Path(spec_path)
     spec = load_lab_spec(spec_path)
     profile = load_lab_profile(profile_path)
     merged = _merge_variables(spec, profile)
     _validate_path_references(merged)
-    return _normalize_topology(merged)
+    _validate_management_addresses(merged)
+    return _normalize_topology(merged, spec_path.parent)
 
 
 def dump_topology_yaml(topology: Mapping[str, Any], *, comment: bool = True) -> str:

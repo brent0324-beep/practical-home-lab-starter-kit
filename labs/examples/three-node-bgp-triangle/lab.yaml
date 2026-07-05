@@ -1,9 +1,10 @@
 name: bgp-triangle
 description: "Three-node routed triangle suitable for BGP policy demonstrations."
 api_version: "1.0"
+mgmt_ipv4_subnet: "{{ mgmt_subnet }}"
 variables:
   mgmt_prefix: "172.40.10."
-  mgmt_mask: "/24"
+  mgmt_subnet: "172.40.10.0/24"
   leaf_a_octet: "41"
   leaf_b_octet: "42"
   leaf_c_octet: "43"
@@ -13,8 +14,8 @@ variables:
 nodes:
   leaf-a:
     kind: linux
-    image: docker.io/nicolaka/netshoot:alpine
-    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_a_octet }}{{ mgmt_mask }}"
+    image: docker.io/nicolaka/netshoot:v0.16
+    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_a_octet }}"
     startup_config: startup/leaf-a.cfg
     binds:
       - startup/leaf-a.cfg:/tmp/leaf-a.cfg:ro
@@ -23,8 +24,8 @@ nodes:
       PEERS: "leaf-b,leaf-c"
   leaf-b:
     kind: linux
-    image: docker.io/nicolaka/netshoot:alpine
-    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_b_octet }}{{ mgmt_mask }}"
+    image: docker.io/nicolaka/netshoot:v0.16
+    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_b_octet }}"
     startup_config: startup/leaf-b.cfg
     binds:
       - startup/leaf-b.cfg:/tmp/leaf-b.cfg:ro
@@ -33,8 +34,8 @@ nodes:
       PEERS: "leaf-a,leaf-c"
   leaf-c:
     kind: linux
-    image: docker.io/nicolaka/netshoot:alpine
-    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_c_octet }}{{ mgmt_mask }}"
+    image: docker.io/nicolaka/netshoot:v0.16
+    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_c_octet }}"
     startup_config: startup/leaf-c.cfg
     binds:
       - startup/leaf-c.cfg:/tmp/leaf-c.cfg:ro

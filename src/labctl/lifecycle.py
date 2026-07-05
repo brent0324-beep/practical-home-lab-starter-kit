@@ -92,12 +92,16 @@ class LabctlLifecycle:
             raise LabctlError(
                 f"containerlab binary not found: {self.containerlab_binary}. Install and retry."
             )
-        return subprocess.run(
-            args,
-            check=check,
-            text=True,
-            capture_output=capture_output,
-        )
+        try:
+            return subprocess.run(
+                args,
+                check=check,
+                text=True,
+                capture_output=capture_output,
+            )
+        except subprocess.CalledProcessError as err:
+            detail = (err.stderr or err.stdout or str(err)).strip()
+            raise LabctlError(detail) from err
 
     def _topology_path(self, spec_path: Path, output: Path | None) -> Path:
         if output:

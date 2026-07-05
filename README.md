@@ -198,7 +198,10 @@ git diff --check
 ```
 
 For the new Containerlab flow, start with
-[docs/labctl-quickstart.md](docs/labctl-quickstart.md).
+[docs/labctl-quickstart.md](docs/labctl-quickstart.md). First-time
+Containerlab users should join the `clab_admins` group with
+`sudo usermod -aG clab_admins <user>`, then fully log out and log back in
+before deploying a lab.
 
 ## Golden Path Workflow
 

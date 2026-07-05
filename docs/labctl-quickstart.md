@@ -5,6 +5,7 @@ Estimated five-minute setup and deploy for fresh Brent-like environment:
 1. Install container prerequisites
    - `docker` with permissions for your user (no `sudo` in commands below).
    - `containerlab` in `PATH`.
+   - `sudo usermod -aG clab_admins <user>`, then fully log out and log back in.
 2. Run validator checks:
    - `./scripts/validate_lab_specs.py`
 3. Generate a topology from a saved profile:

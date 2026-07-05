@@ -7,6 +7,8 @@ This is the native input contract used by `./scripts/labctl`.
 - `name` (required): DNS-safe lab identifier; used for rendered topology name.
 - `description` (optional): Human text.
 - `api_version` (optional): Reserved version marker.
+- `mgmt_ipv4_subnet` (optional): Containerlab management subnet, for example
+  `172.30.90.0/24`. This may use profile variables.
 - `variables` (optional): Map merged with an optional profile.
 - `nodes` (required): Map of node names to node specifications.
 - `links` (required): List of link objects, each with exactly two endpoints.
@@ -15,7 +17,9 @@ This is the native input contract used by `./scripts/labctl`.
 
 - `kind` (required): Containerlab node kind string (for example `linux`).
 - `image` (required): Public container image reference.
-- `mgmt_ipv4` (optional): Management IPv4 address for the node.
+- `mgmt_ipv4` (optional): Bare management IPv4 host address for the node.
+  If a prefix is supplied in input, the renderer strips it and validates the
+  resulting host inside `mgmt_ipv4_subnet`.
 - `startup_config` (optional): Relative startup path. Absolute paths and `..` are rejected.
 - `binds` (optional): List of bind strings (`host:container:ro` or `host:container`).
   Host source paths must be relative and may not include parent traversal.

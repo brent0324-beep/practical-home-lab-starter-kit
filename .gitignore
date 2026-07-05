@@ -60,3 +60,6 @@ credentials/
 
 # Draft publication assets
 blog/devto_cover_image.png
+
+# containerlab runtime lab directories (root-owned, never commit)
+labs/**/clab-*/

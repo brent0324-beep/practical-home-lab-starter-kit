@@ -29,12 +29,17 @@ class TestLabctlRenderer(unittest.TestCase):
 
         self.assertEqual(actual, expected)
         self.assertIn("io.labctl.managed", actual["topology"]["defaults"]["labels"])
+        self.assertEqual(actual["mgmt"]["ipv4-subnet"], "172.30.90.0/24")
+        for node in actual["topology"]["nodes"].values():
+            self.assertNotIn("/", node["mgmt-ipv4"])
+            self.assertEqual(node["image"], "docker.io/nicolaka/netshoot:v0.16")
 
     def test_profile_variable_replacement(self):
         spec_path = REPO_ROOT / "labs/examples/two-node-point-to-point/lab.yaml"
         actual = render_lab_topology(spec_path, REPO_ROOT / "profiles/labs/two-node-ptp-fast.yaml")
-        self.assertIn("172.30.90.111/24", actual["topology"]["nodes"]["router-a"]["mgmt-ipv4"])
-        self.assertIn("172.30.90.112/24", actual["topology"]["nodes"]["router-b"]["mgmt-ipv4"])
+        self.assertEqual("172.30.90.111", actual["topology"]["nodes"]["router-a"]["mgmt-ipv4"])
+        self.assertEqual("172.30.90.112", actual["topology"]["nodes"]["router-b"]["mgmt-ipv4"])
+        self.assertEqual("172.30.90.0/24", actual["mgmt"]["ipv4-subnet"])
 
 
 class TestLabctlSpecValidation(unittest.TestCase):
@@ -73,9 +78,9 @@ nodes:
     image: alpine:3
     startup_config: startup/router-b.cfg
 links:
-      - endpoints:
-          - router-a:eth1
-          - router-b:eth1
+  - endpoints:
+      - router-a:eth1
+      - router-b:eth1
 """
             )
             handle.flush()
@@ -106,6 +111,31 @@ links:
             )
             handle.flush()
             with self.assertRaises(LabctlPathError):
+                render_lab_topology(Path(handle.name))
+
+    def test_mgmt_host_outside_subnet_rejected(self):
+        with tempfile.NamedTemporaryFile("w+", suffix=".yaml", delete=False) as handle:
+            handle.write(
+                """
+name: subnet-test
+mgmt_ipv4_subnet: 172.30.90.0/24
+nodes:
+  router-a:
+    kind: linux
+    image: docker.io/nicolaka/netshoot:v0.16
+    mgmt_ipv4: 172.30.91.111
+  router-b:
+    kind: linux
+    image: docker.io/nicolaka/netshoot:v0.16
+    mgmt_ipv4: 172.30.90.112
+links:
+  - endpoints:
+      - router-a:eth1
+      - router-b:eth1
+"""
+            )
+            handle.flush()
+            with self.assertRaisesRegex(LabctlValidationError, "outside mgmt subnet"):
                 render_lab_topology(Path(handle.name))
 
 

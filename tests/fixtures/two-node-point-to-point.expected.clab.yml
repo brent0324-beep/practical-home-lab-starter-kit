@@ -1,4 +1,6 @@
 name: two-node-ptp
+mgmt:
+  ipv4-subnet: 172.30.90.0/24
 topology:
   defaults:
     labels:
@@ -11,21 +13,21 @@ topology:
   nodes:
     router-a:
       binds:
-        - startup/router-a.cfg:/tmp/router-a.cfg:ro
+        - /opt/products/practical-home-lab-starter-kit/labs/examples/two-node-point-to-point/startup/router-a.cfg:/tmp/router-a.cfg:ro
       env:
         ASN: '65001'
         PEER: router-b
-      image: docker.io/nicolaka/netshoot:alpine
+      image: docker.io/nicolaka/netshoot:v0.16
       kind: linux
-      mgmt-ipv4: 172.30.90.111/24
-      startup-config: startup/router-a.cfg
+      mgmt-ipv4: 172.30.90.111
+      startup-config: /opt/products/practical-home-lab-starter-kit/labs/examples/two-node-point-to-point/startup/router-a.cfg
     router-b:
       binds:
-        - startup/router-b.cfg:/tmp/router-b.cfg:ro
+        - /opt/products/practical-home-lab-starter-kit/labs/examples/two-node-point-to-point/startup/router-b.cfg:/tmp/router-b.cfg:ro
       env:
         ASN: '65002'
         PEER: router-a
-      image: docker.io/nicolaka/netshoot:alpine
+      image: docker.io/nicolaka/netshoot:v0.16
       kind: linux
-      mgmt-ipv4: 172.30.90.112/24
-      startup-config: startup/router-b.cfg
+      mgmt-ipv4: 172.30.90.112
+      startup-config: /opt/products/practical-home-lab-starter-kit/labs/examples/two-node-point-to-point/startup/router-b.cfg

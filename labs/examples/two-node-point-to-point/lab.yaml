@@ -1,9 +1,10 @@
 name: two-node-ptp
 description: "Two-router point-to-point lab scaffold for quick routing exercises."
 api_version: "1.0"
+mgmt_ipv4_subnet: "{{ mgmt_subnet }}"
 variables:
   mgmt_prefix: "172.30.20."
-  mgmt_mask: "/24"
+  mgmt_subnet: "172.30.20.0/24"
   r1_octet: "11"
   r2_octet: "12"
   r1_asn: "65001"
@@ -11,8 +12,8 @@ variables:
 nodes:
   router-a:
     kind: linux
-    image: docker.io/nicolaka/netshoot:alpine
-    mgmt_ipv4: "{{ mgmt_prefix }}{{ r1_octet }}{{ mgmt_mask }}"
+    image: docker.io/nicolaka/netshoot:v0.16
+    mgmt_ipv4: "{{ mgmt_prefix }}{{ r1_octet }}"
     startup_config: startup/router-a.cfg
     binds:
       - startup/router-a.cfg:/tmp/router-a.cfg:ro
@@ -21,8 +22,8 @@ nodes:
       ASN: "{{ r1_asn }}"
   router-b:
     kind: linux
-    image: docker.io/nicolaka/netshoot:alpine
-    mgmt_ipv4: "{{ mgmt_prefix }}{{ r2_octet }}{{ mgmt_mask }}"
+    image: docker.io/nicolaka/netshoot:v0.16
+    mgmt_ipv4: "{{ mgmt_prefix }}{{ r2_octet }}"
     startup_config: startup/router-b.cfg
     binds:
       - startup/router-b.cfg:/tmp/router-b.cfg:ro

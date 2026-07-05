@@ -2,5 +2,6 @@ name: two-node-ptp-fast
 description: "Fast redeploy profile for the two-node point-to-point lab."
 variables:
   mgmt_prefix: "172.30.90."
+  mgmt_subnet: "172.30.90.0/24"
   r1_octet: "111"
   r2_octet: "112"

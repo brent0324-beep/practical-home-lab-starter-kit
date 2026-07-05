@@ -72,6 +72,17 @@ class TestLabctlLifecycle(unittest.TestCase):
         lifecycle.destroy("two-node-ptp")
         self.assertIn(["containerlab", "destroy", "-t", str(topology_file)], self.calls)
 
+    def test_containerlab_stderr_surfaces_as_labctl_error(self):
+        lifecycle = LabctlLifecycle(state_dir=self.state_dir, containerlab_binary=sys.executable)
+        with self.assertRaisesRegex(LabctlError, "containerlab failed"):
+            lifecycle._run(
+                [
+                    sys.executable,
+                    "-c",
+                    "import sys; sys.stderr.write('containerlab failed'); sys.exit(7)",
+                ]
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
