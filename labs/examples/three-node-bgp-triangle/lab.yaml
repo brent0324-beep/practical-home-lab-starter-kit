@@ -1,0 +1,53 @@
+name: bgp-triangle
+description: "Three-node routed triangle suitable for BGP policy demonstrations."
+api_version: "1.0"
+variables:
+  mgmt_prefix: "172.40.10."
+  mgmt_mask: "/24"
+  leaf_a_octet: "41"
+  leaf_b_octet: "42"
+  leaf_c_octet: "43"
+  asn_a: "65101"
+  asn_b: "65202"
+  asn_c: "65303"
+nodes:
+  leaf-a:
+    kind: linux
+    image: docker.io/nicolaka/netshoot:alpine
+    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_a_octet }}{{ mgmt_mask }}"
+    startup_config: startup/leaf-a.cfg
+    binds:
+      - startup/leaf-a.cfg:/tmp/leaf-a.cfg:ro
+    env:
+      ASN: "{{ asn_a }}"
+      PEERS: "leaf-b,leaf-c"
+  leaf-b:
+    kind: linux
+    image: docker.io/nicolaka/netshoot:alpine
+    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_b_octet }}{{ mgmt_mask }}"
+    startup_config: startup/leaf-b.cfg
+    binds:
+      - startup/leaf-b.cfg:/tmp/leaf-b.cfg:ro
+    env:
+      ASN: "{{ asn_b }}"
+      PEERS: "leaf-a,leaf-c"
+  leaf-c:
+    kind: linux
+    image: docker.io/nicolaka/netshoot:alpine
+    mgmt_ipv4: "{{ mgmt_prefix }}{{ leaf_c_octet }}{{ mgmt_mask }}"
+    startup_config: startup/leaf-c.cfg
+    binds:
+      - startup/leaf-c.cfg:/tmp/leaf-c.cfg:ro
+    env:
+      ASN: "{{ asn_c }}"
+      PEERS: "leaf-a,leaf-b"
+links:
+  - endpoints:
+      - leaf-a:eth1
+      - leaf-b:eth1
+  - endpoints:
+      - leaf-b:eth1
+      - leaf-c:eth1
+  - endpoints:
+      - leaf-c:eth1
+      - leaf-a:eth1

@@ -1,0 +1,31 @@
+name: two-node-ptp
+topology:
+  defaults:
+    labels:
+      io.labctl.engine: labctl
+      io.labctl.managed: 'true'
+  links:
+    - endpoints:
+        - router-a:eth1
+        - router-b:eth1
+  nodes:
+    router-a:
+      binds:
+        - startup/router-a.cfg:/tmp/router-a.cfg:ro
+      env:
+        ASN: '65001'
+        PEER: router-b
+      image: docker.io/nicolaka/netshoot:alpine
+      kind: linux
+      mgmt-ipv4: 172.30.90.111/24
+      startup-config: startup/router-a.cfg
+    router-b:
+      binds:
+        - startup/router-b.cfg:/tmp/router-b.cfg:ro
+      env:
+        ASN: '65002'
+        PEER: router-a
+      image: docker.io/nicolaka/netshoot:alpine
+      kind: linux
+      mgmt-ipv4: 172.30.90.112/24
+      startup-config: startup/router-b.cfg

@@ -197,6 +197,9 @@ bash -n scripts/validate.sh scripts/redaction-check.sh scripts/package-release.s
 git diff --check
 ```
 
+For the new Containerlab flow, start with
+[docs/labctl-quickstart.md](docs/labctl-quickstart.md).
+
 ## Golden Path Workflow
 
 The Golden Path is the shortest operational flow through the starter kit:

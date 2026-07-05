@@ -32,6 +32,11 @@ media/thumbnails/*
 media/screenshots/*
 !media/screenshots/.gitkeep
 
+# Labctl runtime state and generated topology artifacts.
+.labctl/
+*.clab.yml
+!tests/fixtures/*.clab.yml
+
 # Screenshot drafts and staging areas.
 screenshots/work/
 screenshots/drafts/

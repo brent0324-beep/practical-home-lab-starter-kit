@@ -370,7 +370,10 @@ python_files=(
   "scripts/render_codex_prompt.py"
   "scripts/build_migration_bundle.py"
   "scripts/validate_prompt_standard.py"
+  "scripts/validate_lab_specs.py"
   "tests/test_engineering_session.py"
+  "tests/test_labctl_renderer.py"
+  "tests/test_labctl_lifecycle.py"
 )
 
 if ! python3 -m py_compile "${python_files[@]}"; then
@@ -383,6 +386,11 @@ if ! python3 scripts/render_repository_bootstrap.py --check; then
   fail=1
 fi
 
+if ! python3 scripts/validate_lab_specs.py; then
+  echo "Lab spec validation failed."
+  fail=1
+fi
+
 if ! python3 scripts/validate_prompt_standard.py; then
   echo "Prompt standard validation failed."
   fail=1
@@ -390,6 +398,11 @@ fi
 
 if ! python3 -m unittest tests.test_engineering_session; then
   echo "Engineering session tests failed."
+  fail=1
+fi
+
+if ! python3 -m unittest tests.test_labctl_renderer tests.test_labctl_lifecycle; then
+  echo "labctl tests failed."
   fail=1
 fi
 
