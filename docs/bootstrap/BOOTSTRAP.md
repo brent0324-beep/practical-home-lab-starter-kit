@@ -29,8 +29,8 @@ Do not hand-edit generated BOOTSTRAP.md except emergency repair.
 
 ## Repository Purpose
 
-- Summary: Public educational starter kit for sanitized Linux, GNS3, Ansible, and documentation workflows in a home lab.
-- Scope: Preserve a contributor-friendly, public-safe repository with practical examples, governance, and validation guidance for maintainers and readers.
+- Summary: Public educational home-lab starter kit plus labctl, a spec-driven Containerlab deployment engine for fast, repeatable lab environments.
+- Scope: Preserve a contributor-friendly, public-safe repository that pairs sanitized Linux, GNS3, and Ansible references with a validated JSON/YAML lab-spec workflow and saved profiles for one-command redeploy.
 
 ## Repository Classification
 
@@ -54,8 +54,9 @@ Do not hand-edit generated BOOTSTRAP.md except emergency repair.
 ## Safety Boundaries
 
 - Keep the repository public-safe, beginner-friendly, and reference-focused.
-- Do not modify live infrastructure, host configuration, services, Docker state, packages, SSH, or firewall settings from this repository.
-- Do not change product behavior, release packaging, or unrelated educational content as part of governance adoption.
+- labctl lifecycle operations may create, inspect, and destroy Docker containers and networks ONLY when labeled io.labctl.managed=true; never mutate unmanaged containers, host services, packages, SSH, or firewall settings.
+- Destroy operations must be scoped by explicit lab name and the managed label; no blanket prune of unmanaged Docker resources.
+- Governance and docs changes must not alter labctl runtime behavior or release packaging as a side effect.
 - Do not weaken validation, redaction, no-force-push, or repository-boundary controls.
 
 ## Privacy Boundaries
@@ -69,6 +70,7 @@ Do not hand-edit generated BOOTSTRAP.md except emergency repair.
 - Public docs, sanitized templates, and example scripts remain the primary product surface.
 - Governance v2 Lite adds repository-local bootstrap, session, prompt, and bundle tooling for maintainers without changing product functionality.
 - Generated engineering-session artifacts live under generated/ and remain non-canonical.
+- labctl (src/labctl/) renders validated lab specs into native Containerlab topologies and wraps deploy/status/destroy; Containerlab remains the execution engine.
 
 ## Important Directories
 
@@ -79,6 +81,10 @@ Do not hand-edit generated BOOTSTRAP.md except emergency repair.
 - `profiles/`: lite prompt defaults and repository design profiles for engineering sessions
 - `schemas/`: prompt specification schema references
 - `generated/`: ignored repository context, session history, prompt smoke output, and migration bundles
+- `src/labctl/`: labctl CLI, spec validation, topology renderer, lifecycle wrappers
+- `labs/examples/`: sanitized flagship example lab specs and startup fixtures
+- `profiles/labs/`: saved variable profiles for one-command lab redeployment
+- `schemas/`: prompt schema plus lab spec and lab profile schema references
 
 ## Validation Commands
 
@@ -134,6 +140,7 @@ Do not hand-edit generated BOOTSTRAP.md except emergency repair.
 ## Warnings / Inconsistencies
 
 - docs/bootstrap/BOOTSTRAP.md is generated and should not be hand-edited during normal workflow.
+- The safety boundary intentionally permits scoped Docker mutation for labctl (managed-label only), diverging from the original docs-only prohibition. This is a deliberate product-scope decision, not a weakened control.
 - Generated prompts and migration bundles are maintainer artifacts, not canonical tracked source.
 
 ## Live Session State
