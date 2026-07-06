@@ -134,7 +134,6 @@ Do not hand-edit generated BOOTSTRAP.md except emergency repair.
 
 ## Outstanding Governance Work
 
-- labctl Phase 2 - decide mgmt-network exposure policy (host-local vs VPN-reachable) and document the DOCKER-USER / UFW bypass behavior in the quickstart; VPN reachability deferred until a concrete need arises.
 - Refresh docs/bootstrap/SESSION_STATE.md at session start and before major handoff.
 - Keep lite prompt, bundle, and bootstrap assets aligned with future shared standards updates.
 - Expand tests only where they materially improve maintainability for this public repository.

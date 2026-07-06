@@ -158,9 +158,6 @@ known_technical_debt:
   - Bootstrap rendering depends on local Python with YAML support.
 
 outstanding_governance_work:
-  - labctl Phase 2 - decide mgmt-network exposure policy (host-local vs
-    VPN-reachable) and document the DOCKER-USER / UFW bypass behavior in the
-    quickstart; VPN reachability deferred until a concrete need arises.
   - Refresh docs/bootstrap/SESSION_STATE.md at session start and before major
     handoff.
   - Keep lite prompt, bundle, and bootstrap assets aligned with future shared
