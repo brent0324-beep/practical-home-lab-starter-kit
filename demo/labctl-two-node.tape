@@ -10,9 +10,7 @@
 #   - no stale `clab` docker network with a conflicting subnet
 #     (docker network rm clab  if a previous lab left one)
 #   - the two-node lab NOT already deployed
-
 Output demo/labctl-two-node.gif
-
 # --- terminal appearance ---
 Set Shell "bash"
 Set FontSize 16
