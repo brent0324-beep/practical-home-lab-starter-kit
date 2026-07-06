@@ -25,3 +25,29 @@ Estimated five-minute setup and deploy for fresh Brent-like environment:
   (for example `../`) before any runtime command runs.
 - The repository tracks only specs, schemas, and docs; local outputs are written to
   the `.clab.yml` path you specify.
+
+## Network exposure and firewalls
+
+By default, labctl labs are host-local. Each lab's management network is an
+internal Docker bridge (for example `172.30.90.0/24` for the two-node example),
+and the nodes are reachable only from the host running the lab. labctl does not
+publish node ports to external interfaces, so a default lab is not exposed to
+your LAN or the internet.
+
+One important caveat if you plan to change that: containerlab uses Docker's
+networking, and Docker manipulates iptables directly, ahead of UFW. Docker's
+rules are evaluated in the FORWARD chain before UFW's INPUT rules see the
+packet, so UFW does not govern container traffic by default. This is a known
+Docker design decision, not a bug. It does not expose your labs on its own —
+nothing routes to the lab bridges unless you add that routing — but it means
+that if you later publish ports, bridge a lab to your LAN, or reach labs over a
+VPN, UFW will not be the control protecting them.
+
+If you need to restrict lab reachability once you introduce routing, the
+reliable options are the Docker-provided DOCKER-USER iptables chain (rules
+there apply before Docker's own and survive Docker restarts), binding to
+localhost, or an upstream/cloud firewall that sits outside the host.
+
+Remote access to labs (for example over WireGuard) is intentionally out of
+scope for now and will be treated as an explicit, opt-in feature if a concrete
+need arises — not something a lab does by default.

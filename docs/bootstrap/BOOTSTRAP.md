@@ -53,6 +53,7 @@ Do not hand-edit generated BOOTSTRAP.md except emergency repair.
 
 ## Safety Boundaries
 
+- labctl labs are host-local by default; nodes bind to internal bridge networks with no published ports. External exposure (published ports, LAN bridging, VPN reach) is opt-in only and must be a deliberate operator decision, recognizing that Docker/containerlab bypass UFW.
 - Keep the repository public-safe, beginner-friendly, and reference-focused.
 - labctl lifecycle operations may create, inspect, and destroy Docker containers and networks ONLY when labeled io.labctl.managed=true; never mutate unmanaged containers, host services, packages, SSH, or firewall settings.
 - Destroy operations must be scoped by explicit lab name and the managed label; no blanket prune of unmanaged Docker resources.
