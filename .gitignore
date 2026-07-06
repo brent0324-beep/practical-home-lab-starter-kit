@@ -63,3 +63,6 @@ blog/devto_cover_image.png
 
 # containerlab runtime lab directories (root-owned, never commit)
 labs/**/clab-*/
+demo/*.gif
+demo/*.mp4
+demo/*.webm

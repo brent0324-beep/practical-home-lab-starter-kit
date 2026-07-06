@@ -8,6 +8,8 @@ This directory contains blog-ready public content derived from the starter kit.
   adapted from the README.
 - `devto-practical-home-lab-starter-kit-launch.md` is a DEV.to-ready launch
   draft focused on the project background, architecture, and community value.
+- `labctl-two-node-network-lab-five-minutes.md` is a hands-on `labctl` quick
+  path from a YAML spec to a running two-node Containerlab lab.
 - A future Golden Path article can build on the launch draft by showing the
   small operational workflow from repo orientation through sanitized validation.
 
