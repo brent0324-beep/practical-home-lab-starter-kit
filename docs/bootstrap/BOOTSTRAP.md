@@ -133,9 +133,6 @@ Do not hand-edit generated BOOTSTRAP.md except emergency repair.
 
 ## Outstanding Governance Work
 
-- labctl Phase 2 - per-lab uniquely-named mgmt network (e.g. clab-<labname>) to prevent management subnet collisions between labs sharing the default clab network.
-- labctl Phase 2 - detect existing mgmt network with a mismatched subnet and fail with a clean labctl error instructing removal, rather than surfacing containerlab's cryptic "no configured subnet contains IP" message.
-- labctl Phase 2 - smoke test should clean up its own containerlab runtime directory (destroy --cleanup or rm the clab-<lab> dir) to avoid leaving root-owned artifacts in the tree.
 - labctl Phase 2 - decide mgmt-network exposure policy (host-local vs VPN-reachable) and document the DOCKER-USER / UFW bypass behavior in the quickstart; VPN reachability deferred until a concrete need arises.
 - Refresh docs/bootstrap/SESSION_STATE.md at session start and before major handoff.
 - Keep lite prompt, bundle, and bootstrap assets aligned with future shared standards updates.
