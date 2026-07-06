@@ -47,8 +47,8 @@ links:
       - leaf-a:eth1
       - leaf-b:eth1
   - endpoints:
-      - leaf-b:eth1
+      - leaf-b:eth2
       - leaf-c:eth1
   - endpoints:
-      - leaf-c:eth1
-      - leaf-a:eth1
+      - leaf-c:eth2
+      - leaf-a:eth2

@@ -161,6 +161,10 @@ def _management_subnet(spec: Mapping[str, Any]) -> str | None:
         raise LabctlValidationError(f"mgmt_ipv4_subnet must be a valid IPv4 subnet: {subnet}") from err
 
 
+def management_network_name(lab_name: str) -> str:
+    return f"clab-{lab_name}"
+
+
 def _validate_path_references(spec: Mapping[str, Any]) -> None:
     nodes = spec.get("nodes", {})
     if not isinstance(nodes, dict):
@@ -292,7 +296,10 @@ def _normalize_topology(spec: Mapping[str, Any], lab_dir: Path) -> Dict[str, Any
     }
     subnet = _management_subnet(spec)
     if subnet is not None:
-        topology["mgmt"] = {"ipv4-subnet": subnet}
+        topology["mgmt"] = {
+            "network": management_network_name(spec["name"]),
+            "ipv4-subnet": subnet,
+        }
     return topology
 
 

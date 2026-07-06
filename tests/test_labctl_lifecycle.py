@@ -30,6 +30,8 @@ class TestLabctlLifecycle(unittest.TestCase):
 
     def _runner(self, command: list[str]) -> FakeCompleted:
         self.calls.append(command)
+        if command[:3] == ["docker", "network", "inspect"]:
+            return FakeCompleted(returncode=1, stderr="network not found")
         return FakeCompleted(stdout="ok")
 
     def test_deploy_generates_expected_topology_file(self):
@@ -38,6 +40,7 @@ class TestLabctlLifecycle(unittest.TestCase):
         topology = lifecycle.deploy(
             spec_path,
             profile_path=REPO_ROOT / "profiles/labs/two-node-ptp-fast.yaml",
+            output=Path(self.tempdir.name) / "two-node-ptp.clab.yml",
             dry_run=True,
         )
         self.assertTrue(topology.name.endswith(".clab.yml"))
@@ -54,11 +57,12 @@ class TestLabctlLifecycle(unittest.TestCase):
         lifecycle.deploy(
             spec_path,
             profile_path=REPO_ROOT / "profiles/labs/two-node-ptp-fast.yaml",
+            output=Path(self.tempdir.name) / "two-node-ptp.clab.yml",
             dry_run=True,
         )
 
         # Seed realistic state to allow status/destroy command generation.
-        topology_file = spec_path.with_suffix(".clab.yml")
+        topology_file = Path(self.tempdir.name) / "two-node-ptp.clab.yml"
         state_file = self.state_dir / "state.json"
         state_file.parent.mkdir(parents=True, exist_ok=True)
         state_file.write_text(
@@ -70,7 +74,7 @@ class TestLabctlLifecycle(unittest.TestCase):
         lifecycle.status("two-node-ptp")
         self.assertIn(["containerlab", "inspect", "-t", str(topology_file)], self.calls)
         lifecycle.destroy("two-node-ptp")
-        self.assertIn(["containerlab", "destroy", "-t", str(topology_file)], self.calls)
+        self.assertIn(["containerlab", "destroy", "-t", str(topology_file), "--cleanup"], self.calls)
 
     def test_containerlab_stderr_surfaces_as_labctl_error(self):
         lifecycle = LabctlLifecycle(state_dir=self.state_dir, containerlab_binary=sys.executable)
@@ -82,6 +86,50 @@ class TestLabctlLifecycle(unittest.TestCase):
                     "import sys; sys.stderr.write('containerlab failed'); sys.exit(7)",
                 ]
             )
+
+    def test_deploy_rejects_stale_mismatched_network_subnet(self):
+        def runner(command: list[str]) -> FakeCompleted:
+            self.calls.append(command)
+            if command == ["docker", "network", "inspect", "clab-two-node-ptp"]:
+                return FakeCompleted(
+                    stdout='[{"IPAM":{"Config":[{"Subnet":"172.30.20.0/24"}]}}]'
+                )
+            return FakeCompleted(stdout="ok")
+
+        lifecycle = LabctlLifecycle(state_dir=self.state_dir, runner=runner)
+        spec_path = REPO_ROOT / "labs/examples/two-node-point-to-point/lab.yaml"
+        with self.assertRaisesRegex(
+            LabctlError,
+            "Docker network 'clab-two-node-ptp' already exists with subnet 172.30.20.0/24",
+        ):
+            lifecycle.deploy(
+                spec_path,
+                profile_path=REPO_ROOT / "profiles/labs/two-node-ptp-fast.yaml",
+                output=Path(self.tempdir.name) / "stale-network.clab.yml",
+            )
+
+        self.assertFalse(any(command[:2] == ["containerlab", "deploy"] for command in self.calls))
+
+    def test_failed_deploy_removes_its_mgmt_network(self):
+        def runner(command: list[str]) -> FakeCompleted:
+            self.calls.append(command)
+            if command == ["docker", "network", "inspect", "clab-bgp-triangle"]:
+                return FakeCompleted(returncode=1, stderr="network not found")
+            if command[:2] == ["containerlab", "deploy"]:
+                return FakeCompleted(returncode=1, stderr="duplicate endpoint")
+            if command == ["docker", "network", "rm", "clab-bgp-triangle"]:
+                return FakeCompleted(stdout="clab-bgp-triangle")
+            return FakeCompleted(stdout="ok")
+
+        lifecycle = LabctlLifecycle(state_dir=self.state_dir, runner=runner)
+        spec_path = REPO_ROOT / "labs/examples/three-node-bgp-triangle/lab.yaml"
+        with self.assertRaisesRegex(LabctlError, "duplicate endpoint"):
+            lifecycle.deploy(
+                spec_path,
+                output=Path(self.tempdir.name) / "bgp-triangle.clab.yml",
+            )
+
+        self.assertIn(["docker", "network", "rm", "clab-bgp-triangle"], self.calls)
 
 
 if __name__ == "__main__":

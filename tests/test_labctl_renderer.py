@@ -29,16 +29,31 @@ class TestLabctlRenderer(unittest.TestCase):
 
         self.assertEqual(actual, expected)
         self.assertIn("io.labctl.managed", actual["topology"]["defaults"]["labels"])
+        self.assertEqual(actual["mgmt"]["network"], "clab-two-node-ptp")
         self.assertEqual(actual["mgmt"]["ipv4-subnet"], "172.30.90.0/24")
         for node in actual["topology"]["nodes"].values():
             self.assertNotIn("/", node["mgmt-ipv4"])
             self.assertEqual(node["image"], "docker.io/nicolaka/netshoot:v0.16")
+
+    def test_example_labs_render_distinct_mgmt_network_names(self):
+        two_node = render_lab_topology(
+            REPO_ROOT / "labs/examples/two-node-point-to-point/lab.yaml",
+            REPO_ROOT / "profiles/labs/two-node-ptp-fast.yaml",
+        )
+        bgp_triangle = render_lab_topology(
+            REPO_ROOT / "labs/examples/three-node-bgp-triangle/lab.yaml"
+        )
+
+        self.assertEqual(two_node["mgmt"]["network"], "clab-two-node-ptp")
+        self.assertEqual(bgp_triangle["mgmt"]["network"], "clab-bgp-triangle")
+        self.assertNotEqual(two_node["mgmt"]["network"], bgp_triangle["mgmt"]["network"])
 
     def test_profile_variable_replacement(self):
         spec_path = REPO_ROOT / "labs/examples/two-node-point-to-point/lab.yaml"
         actual = render_lab_topology(spec_path, REPO_ROOT / "profiles/labs/two-node-ptp-fast.yaml")
         self.assertEqual("172.30.90.111", actual["topology"]["nodes"]["router-a"]["mgmt-ipv4"])
         self.assertEqual("172.30.90.112", actual["topology"]["nodes"]["router-b"]["mgmt-ipv4"])
+        self.assertEqual("clab-two-node-ptp", actual["mgmt"]["network"])
         self.assertEqual("172.30.90.0/24", actual["mgmt"]["ipv4-subnet"])
 
 
