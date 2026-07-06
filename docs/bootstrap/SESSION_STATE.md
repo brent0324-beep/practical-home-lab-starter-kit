@@ -1,7 +1,41 @@
 # Session State
 
 - Repository: `Practical Home Lab Starter Kit`
-- Updated: `2026-06-26`
+- Updated: `2026-07-06`
+
+# Session State
+
+**Branch:** main (labctl Phase 1 merged and promoted)
+**Last validated:** ./scripts/session PASS, live smoke test PASS
+
+## Where things stand
+
+labctl Phase 1 MVP is shipped and public on main. Spec-driven Containerlab
+deployment engine: validate / render / deploy / status / destroy, with
+managed-label lifecycle scoping, saved profiles, schema validation, and two
+flagship example labs (two-node point-to-point, three-node BGP triangle).
+Bootstrap safety boundary was amended to scope Docker mutation to labctl's
+managed label; divergence logged.
+
+Presence content published: a dev.to blog post ("spin up a two-node network
+lab in five minutes") with inline images and a static terminal cover. A VHS
+demo tape lives in demo/ as the reproducible source for future demos.
+
+## Next up (Phase 2 backlog, logged in outstanding_governance_work)
+
+- Per-lab uniquely-named mgmt network to prevent subnet collisions
+- Detect existing mgmt network with mismatched subnet; fail with clean error
+- Smoke test should clean up its own containerlab runtime directory
+- Decide mgmt-network exposure policy (host-local vs VPN); document
+  DOCKER-USER / UFW bypass behavior
+
+## Loose threads
+
+- VHS `Set Framerate` is ignored by the installed build; frame reduction is
+  done via a Pillow post-process script if a future GIF needs the 500-frame
+  dev.to cap. Prefer smaller tape dimensions + MP4 for embedded demos.
+- Consider a pip/pyproject install path so `python3 -m labctl` works without
+  the ./scripts/labctl wrapper.
 
 ## Current Branch
 
