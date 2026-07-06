@@ -1,6 +1,8 @@
 # Session State
 
 **Branch:** feature/labctl-phase2-network (Phase 2 committed, pending SMCPP)
+**Session goal:** promote labctl Phase 2 network fixes through governed main
+integration
 **Last validated:** ./scripts/validate.sh PASS, live two-lab smoke test PASS
 
 ## Where things stand
